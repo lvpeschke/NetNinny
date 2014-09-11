@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -Wall -pedantic -Wno-long-long -O0 -ggdb 
+CFLAGS = -Wall -Werror -pedantic -Wno-long-long -O0 -ggdb 
 compile: main.o exceptions.o tcp_layer.o
 	 $(CC) $(CFLAGS) -o ./assignment_2 $^ -lpthread
 

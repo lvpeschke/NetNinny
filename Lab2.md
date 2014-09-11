@@ -1,9 +1,9 @@
 # Lab2: Net Ninny
 
 ## Questions?
-- How to handle 2-3-… word combinations? --> find()
-- Forking really necessary? Or threads okay?
-- State machine by character to parse the messages?
+- How to handle 2-3-… word combinations?  *find() in the C++ library.*
+- Forking really necessary? Or threads okay? *Threads are okay.*
+- State machine by character to parse the messages? *Yes.*
 
 
 ## Teaching session
@@ -38,4 +38,4 @@ url filtering | content filtering|
 
 
 #### Lena
-* starting the client part: entirely separated: get IP of the current interface and send hardcoded message to real server + get response
+* starting the client part, entirely separated: get IP of the current interface and send hardcoded message to real server + get response

@@ -28,6 +28,10 @@ void serverMain ( int socket )
         socklen_t connection_size = sizeof ( connection );
         arg = new TArg;
         arg->m_Socket = accept ( socket, &connection, &connection_size );
+        if ( arg->m_Socket == -1 )
+        {
+            throw CSocketException ( "Failed to accept connection." );
+        }
         pthread_create ( &t, &attr, (void*(*)(void*)) serverConnection, (void*) arg );
     }
     pthread_attr_destroy ( &attr );

@@ -7,26 +7,59 @@ CTCPBuffer::CTCPBuffer ( int socket )
     m_CurrentPos = 0;
  }
 
-bool CTCPBuffer::getNextChar ( char & c )
+char CTCPBuffer::getNextChar ( )
  {
     if ( m_CurrentPos == m_MaximalPos )
     {
         m_MaximalPos = recv ( m_Socket, m_Buffer, BUFFERSIZE, 0 );
         if ( !m_MaximalPos )
-            return false;
+            throw CSocketException ( "Connection closed" );
         m_CurrentPos = 0;
     }
-    c = m_Buffer[m_CurrentPos++];
-    return true;
+    return m_Buffer[m_CurrentPos++];
+ }
+
+void CTCPBuffer::getHTTPHeader ( string & header )
+ {
+    header.clear( );
+    state_0:
+        header.push_back ( getNextChar ( ) );
+        if ( *header.rbegin() == '\r' )
+            goto state_1;
+        else
+            goto state_0;
+    state_1:
+        header.push_back ( getNextChar ( ) );
+        if ( *header.rbegin() == '\n' )
+            goto state_2;
+        else if ( *header.rbegin() == '\r' )
+            goto state_1;
+        else
+            goto state_0;    
+    state_2:
+        header.push_back ( getNextChar ( ) );
+        if ( *header.rbegin() == '\r' )
+            goto state_3;
+        else
+            goto state_0;
+    state_3:
+        header.push_back ( getNextChar ( ) );
+        if ( *header.rbegin() == '\n' )
+            return;
+        else if ( *header.rbegin() == '\r' )
+            goto state_1;
+        else
+            goto state_0;
  }
 
 void *serverConnection ( TArg * arg )
  {
-    char c;
+    string header;
     cout << "Connection accepted" << endl;
     CTCPBuffer buffer ( arg->m_Socket );
-    while ( buffer.getNextChar ( c ) )
-        cout << c;
+    try { buffer.getHTTPHeader ( header ); }
+    catch ( CSocketException e ) { cout << e << endl; return NULL; }
+    cout << header;
     delete arg;
     return NULL;
  }

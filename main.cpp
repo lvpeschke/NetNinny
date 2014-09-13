@@ -25,17 +25,10 @@ int main ( int argc, char * argv [] )
  	}
  	port = argv[1];
  	
- 	cout << "SERVER RUNNING ON PORT: " << port       << endl;
+ 	cout << "SERVER RUNNING ON PORT: " << port << endl;
  	
- 	try 
- 	{ 
- 		socket = openServerSocket ( port );
- 	}
- 	catch ( CSocketException e )
- 	{
- 		cout << e << endl;
- 		exit ( EXIT_FAILURE );
- 	}
+ 	try { socket = openServerSocket ( port ); }
+ 	catch ( CSocketException e ) { cout << e << endl; exit ( EXIT_FAILURE ); }
  	serverMain ( socket );
  	close ( socket );
  }

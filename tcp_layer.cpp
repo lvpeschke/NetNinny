@@ -22,15 +22,11 @@ bool CTCPBuffer::getNextChar ( char & c )
 
 void *serverConnection ( TArg * arg )
  {
-    char buffer [1000];
-    int len;
+    char c;
     cout << "Connection accepted" << endl;
-    while (1)
-    {    
-        len = recv ( arg->m_Socket, buffer, 1000, 0 );
-        if ( ! len ) break;
-        cout << buffer;
-    }
+    CTCPBuffer buffer ( arg->m_Socket );
+    while ( buffer.getNextChar ( c ) )
+        cout << c;
     delete arg;
     return NULL;
  }

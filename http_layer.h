@@ -9,20 +9,28 @@
 
 using namespace std;
 
+//Abstract class containing things common to all HTTP requests
 class CHTTPRequest
  {
  public:
- 	     CHTTPRequest ( string & header );
- 	void setContent   ( string & content ) { m_Content.assign ( content ); }
- 	void printRequest ( );
+ 	               CHTTPRequest ( const string & header );
+	virtual       ~CHTTPRequest ( ) { }
+ 	virtual string toString (  ) = 0;
  protected:
  	string m_Method;
  	string m_URL;
  	string m_HTTPVersion;
  	string m_Host;
  	string m_Header;
- 	string m_Content;
- 	int    m_ContentLength;
+ };
+
+//Class representing HTTP GET request
+class CHTTPGet : public CHTTPRequest
+ {
+ public:
+ 	       CHTTPGet ( const string & header );
+ 	      ~CHTTPGet ( ) { }
+ 	string toString ( );
  };
 
 #endif

@@ -13,7 +13,7 @@ char CTCPBuffer::getNextChar ( )
     {
         m_MaximalPos = recv ( m_Socket, m_Buffer, BUFFERSIZE, 0 );
         if ( !m_MaximalPos )
-            throw CSocketException ( "Connection closed" );
+            throw CSocketException ( CONNECTION_CLOSED );
         m_CurrentPos = 0;
     }
     return m_Buffer[m_CurrentPos++];
@@ -55,11 +55,19 @@ void CTCPBuffer::getHTTPHeader ( string & header )
 void *serverConnection ( TArg * arg )
  {
     string header;
+    string method;
+    CHTTPRequest * request;
     cout << "Connection accepted" << endl;
     CTCPBuffer buffer ( arg->m_Socket );
     try { buffer.getHTTPHeader ( header ); }
     catch ( CSocketException e ) { cout << e << endl; return NULL; }
-    CHTTPRequest request ( header );
+    method = header.substr( 0, header.find_first_of(' ') );
+    if ( !method.compare ( "GET" ) )
+    {
+        request = new CHTTPGet ( header );
+    }
+    cout << request->toString();    
+    delete request;
     delete arg;
     return NULL;
  }
@@ -79,7 +87,7 @@ void serverMain ( int socket )
         arg->m_Socket = accept ( socket, &connection, &connection_size );
         if ( arg->m_Socket == -1 )
         {
-            throw CSocketException ( "Failed to accept connection." );
+            throw CSocketException ( ACCE_ERR );
         }
         pthread_create ( &t, &attr, (void*(*)(void*)) serverConnection, (void*) arg );
     }
@@ -93,22 +101,22 @@ int openServerSocket ( const char * port )
  	int    sockfd;
 
     if ( getaddrinfo ( "127.0.0.1", port, NULL, &servinfo ) )
-        throw CSocketException ( "Failed to get address info" );
+        throw CSocketException ( ADDR_ERR );
     if ( ( sockfd = socket ( servinfo -> ai_family, SOCK_STREAM, 0 ) ) == -1)
     {
         freeaddrinfo ( servinfo );
-        throw CSocketException ( "Failed to created socket" );
+        throw CSocketException ( SOCK_ERR );
     }
     if ( bind ( sockfd, servinfo -> ai_addr, servinfo -> ai_addrlen ) == -1 )
     {
         close ( sockfd );
         freeaddrinfo ( servinfo );
-        throw CSocketException ( "Failed to bind socket" );
+        throw CSocketException ( BIND_ERR );
     }
     if ( listen ( sockfd, 10 ) == -1 )
     {
       close ( sockfd );
-      throw CSocketException ( "Failed to listen on socket" );
+      throw CSocketException ( LIST_ERR );
     }
     freeaddrinfo ( servinfo );	
     return sockfd; 

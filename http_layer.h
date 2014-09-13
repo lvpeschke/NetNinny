@@ -2,6 +2,9 @@
 #define HTTPLAYER_937236837
 
 #include <string>
+#include <algorithm>
+#include <cctype>
+#include <iostream>
 
 using namespace std;
 

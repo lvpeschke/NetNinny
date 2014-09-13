@@ -13,6 +13,7 @@
 #include <pthread.h>
 
 #include "exceptions.h"
+#include "http_layer.h"
 
 using namespace std;
 

@@ -59,7 +59,7 @@ void *serverConnection ( TArg * arg )
     CTCPBuffer buffer ( arg->m_Socket );
     try { buffer.getHTTPHeader ( header ); }
     catch ( CSocketException e ) { cout << e << endl; return NULL; }
-    cout << header;
+    CHTTPRequest request ( header );
     delete arg;
     return NULL;
  }
@@ -90,18 +90,7 @@ void serverMain ( int socket )
 int openServerSocket ( const char * port )
  {
  	struct addrinfo* servinfo;
- 	struct addrinfo  hints;
  	int    sockfd;
-// 	int    yes = 1;
- 	memset( &hints, 0, sizeof hints );
- 	hints.ai_family   = AF_UNSPEC;
-    hints.ai_socktype = SOCK_STREAM;
-    hints.ai_flags    = AI_PASSIVE;
-
-//    if ( getaddrinfo(NULL, port, &hints, &servinfo) != 0 ) 
-//    {
-//        throw CSocketException ( "Failed to get info about the provided address." );
-//    }
 
     if ( getaddrinfo ( "127.0.0.1", port, NULL, &servinfo ) )
         throw CSocketException ( "Failed to get address info" );

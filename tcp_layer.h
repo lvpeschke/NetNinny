@@ -16,6 +16,22 @@
 
 using namespace std;
 
+#define BUFFERSIZE 1000
+
+//Buffer, that extracts characters from TCP stream to buffer and stores number of extracted characters in m_MaximalPos variable.
+//Extracted characters are accesible one by one with getNextChar method. If the end of buffer is reached, new batch of characters is extracted.
+class CTCPBuffer
+ {
+ public:
+ 		 CTCPBuffer  ( int socket );
+ 	bool getNextChar ( char & c );
+ private:
+ 	char m_Buffer [BUFFERSIZE];
+ 	int  m_CurrentPos;
+ 	int  m_MaximalPos;
+ 	int  m_Socket;
+ };
+
 struct TArg
  {
     int m_Socket;

@@ -1,5 +1,25 @@
 #include "tcp_layer.h"
 
+CTCPBuffer::CTCPBuffer ( int socket )
+ {
+    m_Socket = socket;
+    m_MaximalPos = 0;
+    m_CurrentPos = 0;
+ }
+
+bool CTCPBuffer::getNextChar ( char & c )
+ {
+    if ( m_CurrentPos == m_MaximalPos )
+    {
+        m_MaximalPos = recv ( m_Socket, m_Buffer, BUFFERSIZE, 0 );
+        if ( !m_MaximalPos )
+            return false;
+        m_CurrentPos = 0;
+    }
+    c = m_Buffer[m_CurrentPos++];
+    return true;
+ }
+
 void *serverConnection ( TArg * arg )
  {
     char buffer [1000];

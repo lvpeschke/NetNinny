@@ -1,6 +1,6 @@
 CC = g++
 CFLAGS = -Wall -Werror -pedantic -Wno-long-long -O0 -ggdb 
-compile: main.o exceptions.o tcp_layer.o
+compile: main.o exceptions.o tcp_layer.o http_layer.o
 	 $(CC) $(CFLAGS) -o ./net_ninny $^ -lpthread
 
 %.o: %.cpp
@@ -9,6 +9,7 @@ compile: main.o exceptions.o tcp_layer.o
 main.o: main.cpp
 exceptions.o: exceptions.cpp exceptions.h
 tcp_layer.o: tcp_layer.cpp tcp_layer.h
+http_layer.o: http_layer.cpp http_layer.h
 
 .PHONY: clean mrproper
 

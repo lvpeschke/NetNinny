@@ -15,32 +15,135 @@
 
 //using namespace std;
 
-#define MAXLINE 1000
+#define MAXLINE 1000 //TODO
 
 /* Getting the socket address */
 void *get_in_addr(struct sockaddr *sa)
 {
     if (sa->sa_family == AF_INET)
         return &(((struct sockaddr_in*)sa)->sin_addr);
-    return &(((struct sockaddr_in6*)sa)->sin6_addr);
+    else
+        return &(((struct sockaddr_in6*)sa)->sin6_addr);
 }
 
-
-int main(int argc, char* argv[])
+/* 
+ * Getting a new socket
+ * hostname: address of the host, e.g. "google.com"
+ * Returns the socket fd.
+ */
+int openClientSocket(char *hostname)
 {
     int res;
     struct addrinfo hints, *servinfo;
     int sockfd;
-    //char s[INET6_ADDRSTRLEN];
-    //const char* sbis;
     
+    // checking for the argument
+    if (hostname == NULL) {
+        //TODO exception
+    }
+    
+    /* Getting information about the server */
+    memset(&hints, 0, sizeof hints);
+    hints.ai_family = AF_UNSPEC;
+    hints.ai_socktype = SOCK_STREAM;
+    hints.ai_flags = AI_PASSIVE;
+    if ((res =
+         getaddrinfo(hostname, "http", &hints, &servinfo)) != 0)
+    {
+        //TODO exception
+        fprintf(stderr, "ERROR getaddrinfo: %s\n", gai_strerror(res));
+        freeaddrinfo(servinfo);
+        return -1;
+    }
+    fprintf(stdout, "correct address\n");
+    
+    /* Create socket */
+    // Loop?
+    if ((sockfd =
+         socket(servinfo->ai_family, servinfo->ai_socktype, servinfo->ai_protocol)) == -1)
+    {
+        //TODO exception
+        perror("ERROR socket ");
+        freeaddrinfo (servinfo);
+        return -1;
+    }
+    fprintf(stdout, "socket\n");
+    
+    /* Connecting to the server */
+    if (connect(sockfd, servinfo->ai_addr, servinfo->ai_addrlen) != 0)
+    {
+        //TODO exception
+        perror("ERROR connect ");
+        freeaddrinfo (servinfo);
+        close(sockfd);
+        return -1;
+    }
+    fprintf(stdout, "connected\n");
+    
+    /* Clean up */
+    freeaddrinfo(servinfo);
+    
+    /* Return the file descriptor */
+    return sockfd;
+}
+
+/*
+ * Sending a request to the server via sockfd
+ * sockfd: socket file descriptor, must be legal
+ * request_length: size of the request
+ * request: message to send to the server through the socket
+ * Returns the length of the sent message, or -1 upon error.
+ */
+ssize_t clientSend(int sockfd, size_t request_length, char *request)
+{
+    ssize_t length;
+    if ((length =
+         send(sockfd, request, request_length, 0)) == -1)
+    {
+        //TODO exception
+        perror("ERROR send ");
+    }
+    fprintf(stdout, "sent\n");
+    
+    return length;
+}
+
+/*
+ * Receiving a response from the server via sockfd
+ * sockfd: socket file descriptor, must be legal
+ * content_length: size of the buffer
+ * *response[]: buffer where the response will go
+ * Returns the length of the sent message, or -1 upon error.
+ */
+ssize_t clientRecv(int sockfd, size_t content_length, char **response)
+{
+    ssize_t length;
+    
+    /* Get message */
+    if ((length =
+         recv(sockfd, *response, content_length, 0)) == -1)
+    {
+        //TODO exception
+        perror("ERROR recv ");
+    }
+    fprintf(stdout, "received\n");
+    
+    return length;
+}
+
+
+int main(int argc, char *argv[])
+{
+    int sockfd;
     char request[MAXLINE + 1];
-    char response[MAXLINE + 1];
-    int request_length;
-    int length;
+    char *response;
+    response = (char *)malloc(MAXLINE * (sizeof (char))); //TODO content-length
+    size_t request_length;
+    ssize_t length;
     
     if (argc != 2) {
         fprintf(stderr,"Missing hostname to connect to\n");
+        free(response);
         return -1;
     }
     
@@ -49,105 +152,51 @@ int main(int argc, char* argv[])
     sprintf(request,
              "GET %s HTTP/1.1\r\n"
              "Host: %s\r\n"
-             "\r\n \r\n", "/rfc/rfc1945.txt", argv[1]);
+             "\r\n\r\n", "/", argv[1]);
     request_length = strlen(request);
     
-    
-    /* Getting information about the server */
-    memset(&hints, 0, sizeof hints);
-    hints.ai_family = AF_UNSPEC;
-    hints.ai_socktype = SOCK_STREAM;
-    hints.ai_flags = AI_PASSIVE;
-    if ((res = getaddrinfo(argv[1], "http", &hints, &servinfo)) != 0)
+    //
+    if ((sockfd = openClientSocket(argv[1])) == -1)
     {
-        fprintf(stderr, "ERROR getaddrinfo: %s\n", gai_strerror(res));
-        freeaddrinfo(servinfo);
-        return 1;
+        //TODO exception
+        free(response);
+        return -1;
     }
-    fprintf(stdout, "passed 1\n");
     
-    /* Create socket */
-    // Loop?
-    if ((sockfd = socket(servinfo->ai_family, servinfo->ai_socktype,
-                         servinfo->ai_protocol)) == -1)
+    //
+    if ((length = clientSend(sockfd, request_length, request)) == -1)
     {
-        perror("ERROR socket ");
-        freeaddrinfo (servinfo);
-        exit(-1);
-    }
-    fprintf(stdout, "passed 2\n");
-    
-    /*if (bind(sockfd, servinfo->ai_addr, servinfo->ai_addrlen ) != 0)
-    {
-        perror("ERROR bind ");
-        freeaddrinfo (servinfo);
-        close(sockfd);
-        exit(-1);
-    }
-    fprintf(stdout, "passed 3\n");*/
-    
-    /* Connecting to the server */
-    if (connect(sockfd, servinfo->ai_addr, servinfo->ai_addrlen) != 0)
-    {
-        perror("ERROR connect ");
-        freeaddrinfo (servinfo);
-        close(sockfd);
-        exit(-1);
-    }
-    fprintf(stdout, "passed 4\n");
-    
-    /* Printing server IP */
-    /*if ((sbis = inet_ntop(servinfo->ai_family, get_in_addr((struct sockaddr *)servinfo->ai_addr), s, sizeof s)) == NULL)
-    {
-        perror("ERROR inet_ntop ");
-        freeaddrinfo(servinfo);
-        close(sockfd);
-        exit(-1);
-    }
-    printf("Client connecting to %s\n", s);
-    fprintf(stdout, "passed 5\n");*/
-    
-    /* Clean up */
-    freeaddrinfo(servinfo);
-    
-    /* Send request */
-    if ((length = send(sockfd, request, request_length, 0)) == -1)
-    {
+        //TODO exception
         perror("ERROR send ");
         close(sockfd);
-        exit(-1);
+        free(response);
+        return -1;
+    }
+    if (length != request_length)
+    {
+        fprintf(stderr, "not everything was sent\n");
     }
     
-    /* Get message */
-    if ((length = recv(sockfd, response, 100, 0)) == -1)
+    //
+    if ((length = clientRecv(sockfd, MAXLINE-1, &response)) == -1)
     {
+        //TODO exception
         perror("ERROR recv ");
         close(sockfd);
-        exit(-1);
-    } else if (length == 0) // connection closed
-    {
-        // do nothing
-    } else {
-        // print message
-        write(1, response, length);
+        free(response);
+        return -1;
     }
-    fprintf(stdout, "\n passed 6\n");
+    if (length < MAXLINE) // connection closed
+    {
+        fprintf(stderr, "not everything was received\n"); //TODO correct length
+        // do nothing
+    }
     
-    if ((length = recv(sockfd, response, MAXLINE, 0)) == -1)
-    {
-        perror("ERROR recv ");
-        close(sockfd);
-        exit(-1);
-    } else if (length == 0) // connection closed
-    {
-        // do nothing
-    } else {
-        // print message
-        write(1, response, length);
-    }
-    fprintf(stdout, "\n passed 7\n");
-
-    fprintf(stdout, "!!! REACHED THE END !!!\n");
+    // print message
+    write(1, response, length);
+    
+    fprintf(stdout, "\n!!! REACHED THE END !!!\n");
     close(sockfd);
-    exit(0);
+    free(response);
+    return 0;
 }

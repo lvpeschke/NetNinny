@@ -27,3 +27,18 @@ string CHTTPGet::toString ( )
  	return str; 
  }
 
+CHTTPResponse::CHTTPResponse ( const string & header, const string & content )
+ {
+ 	m_Header.assign ( header );
+ 	m_Content.assign ( content );
+ 	stringstream ss (header);
+ 	ss >> m_HTTPVersion;
+ 	ss >> m_StatusCode;
+ 	ss >> m_ReasonPhrase;
+ }
+
+string CHTTPResponse::toString ( )
+ {
+ 	string str = m_Header + m_Content;
+ 	return str;
+ }

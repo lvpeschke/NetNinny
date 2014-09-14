@@ -33,5 +33,18 @@ class CHTTPGet : public CHTTPRequest
  	string toString ( );
  };
 
+class CHTTPResponse
+ {
+ public:
+ 	       CHTTPResponse ( const string & header, const string & content );
+ 	string toString (  );
+ private:
+ 	string m_Header;
+ 	string m_Content;
+ 	string m_HTTPVersion;
+ 	string m_StatusCode;
+ 	string m_ReasonPhrase;
+ };
+
 #endif
 

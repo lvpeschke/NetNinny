@@ -174,7 +174,7 @@ int mainClient(int argc, char *argv[])
         free(response);
         return -1;
     }
-    if (length != request_length)
+    if (length != (signed)request_length)
     {
         fprintf(stderr, "not everything was sent\n");
     }

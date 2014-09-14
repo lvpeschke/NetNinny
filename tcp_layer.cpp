@@ -56,7 +56,7 @@ void *serverConnection ( TArg * arg )
  {
     string header;
     string method;
-    CHTTPRequest * request;
+    CHTTPRequest * request = NULL;
     cout << "Connection accepted" << endl;
     CTCPBuffer buffer ( arg->m_Socket );
     try { buffer.getHTTPHeader ( header ); }
@@ -65,8 +65,8 @@ void *serverConnection ( TArg * arg )
     if ( !method.compare ( "GET" ) )
     {
         request = new CHTTPGet ( header );
+        cout << request->toString();
     }
-    cout << request->toString();    
     delete request;
     delete arg;
     return NULL;

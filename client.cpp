@@ -1,19 +1,20 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include <iostream>
+#include <cstdio>
+#include <cstdlib>
 #include <unistd.h>
-#include <string.h>
-#include <netinet/in.h>
+#include <cstring>
 
+#include <netinet/in.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>
-//#include <cstring>
-//#include <pthread.h>
 
-#include <errno.h>
-//#include "exceptions.h"
+#include <errno.h> //TODO
 
-//using namespace std;
+#include "http_layer.h"
+#include "exceptions.h"
+
+using namespace std;
 
 #define MAXLINE 1000 //TODO
 
@@ -132,7 +133,7 @@ ssize_t clientRecv(int sockfd, size_t content_length, char **response)
 }
 
 
-int main(int argc, char *argv[])
+int mainClient(int argc, char *argv[])
 {
     int sockfd;
     char request[MAXLINE + 1];
@@ -149,10 +150,11 @@ int main(int argc, char *argv[])
     
     
     /*** CHANGE THIS, HARDCODED REQUEST ***/
+    
     sprintf(request,
-             "GET %s HTTP/1.1\r\n"
+             "GET %s%s HTTP/1.1\r\n"
              "Host: %s\r\n"
-             "\r\n\r\n", "/", argv[1]);
+             "\r\n\r\n", argv[1], "/", argv[1]);
     request_length = strlen(request);
     
     //

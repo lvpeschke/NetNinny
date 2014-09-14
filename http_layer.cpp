@@ -26,4 +26,4 @@ string CHTTPGet::toString ( )
  	str = m_Method + ' ' + m_URL + ' ' + m_HTTPVersion + "\r\nHost: " + m_Host + "\r\n\r\n";
  	return str; 
  }
- 
+

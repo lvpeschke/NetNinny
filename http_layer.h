@@ -16,6 +16,7 @@ class CHTTPRequest
  	               CHTTPRequest ( const string & header );
 	virtual       ~CHTTPRequest ( ) { }
  	virtual string toString (  ) = 0;
+ 			string getURL ( ) { return m_URL; }
  protected:
  	string m_Method;
  	string m_URL;
@@ -47,5 +48,8 @@ class CHTTPResponse
  };
 
 int getContentLength ( const string & header );
+
+//TO BE IMPLEMENTED LATER
+void redirect (  );
 
 #endif

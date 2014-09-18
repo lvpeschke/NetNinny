@@ -74,7 +74,8 @@ void *serverConnection ( TArg * arg )
         request = new CHTTPGet ( header );
         cout << request->toString();
     }
-
+    if ( !checkBadWords ( request->getURL( ) ) )
+        redirect ( );
     delete request;
     delete arg;
     return NULL;

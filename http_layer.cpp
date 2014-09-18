@@ -56,3 +56,8 @@ int getContentLength ( string & header )
 	tmp = tmp.substr ( 0, tmp.find ( "\r\n" ) );
 	return atoi ( tmp.c_str( ) );
  }
+
+void redirect (  )
+ {
+ 	
+ }

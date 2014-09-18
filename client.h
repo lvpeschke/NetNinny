@@ -48,8 +48,20 @@ ssize_t clientSend(int sockfd, size_t request_length, char *request);
 ssize_t clientRecv(int sockfd, size_t content_length, char **response);
 
 //TODO: main function that processes one request
-int mainClient(int argc, char *argv[]);
+int mainClient(char *host);
 
 
+/*
+ Client: CHTTPResponse &mainClient(CHTTPRequest &request)
+ // CHHTPRequest always valid
+ // we can then use request.toString().c_str()
+ // CHTTP *response = new CHTTPResponse(header, content)
+ */
+/*
+ * Sending an HTTP request and getting an HTTP response
+ * request: a valid HTTP request object
+ * Returns an HTTP response object.
+ */
+CHTTPResponse &clientMain(CHTTPRequest &request);
 
 #endif

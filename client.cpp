@@ -19,26 +19,25 @@ int openClientSocket(char *hostname)
     
     // checking for the argument
     if (hostname == NULL) {
-        //TODO exception
+        throw CSocketException(NO_HOST);
     }
     
-    /* Getting information about the server */
+    // Getting information about the server
     memset(&hints, 0, sizeof hints);
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_flags = AI_PASSIVE;
-    if ((res =
-         getaddrinfo(hostname, "http", &hints, &servinfo)) != 0)
+    if ((res = getaddrinfo(hostname, "http", &hints, &servinfo)) != 0)
     {
-        freeaddrinfo(servinfo);
+        //freeaddrinfo(servinfo);
         throw CSocketException (ADDR_ERR);
     }
     fprintf(stdout, "correct address\n"); ///
     
     /* Create socket */
     // TODO Loop?
-    if ((sockfd =
-         socket(servinfo->ai_family, servinfo->ai_socktype, servinfo->ai_protocol)) == -1)
+    if ((sockfd = socket(servinfo->ai_family, servinfo->ai_socktype,
+                         servinfo->ai_protocol)) == -1)
     {
         freeaddrinfo(servinfo);
         throw CSocketException(SOCK_ERR);
@@ -57,7 +56,7 @@ int openClientSocket(char *hostname)
     /* Clean up */
     freeaddrinfo(servinfo);
     
-    /* Return the file descriptor */
+    /* Return the valid file descriptor */
     return sockfd;
 }
 
@@ -67,6 +66,7 @@ ssize_t clientSend(int sockfd, size_t request_length, char *request)
     if ((length =
          send(sockfd, request, request_length, 0)) == -1)
     {
+        close(sockfd);
         throw CSocketException(SEND_ERR);
     }
     fprintf(stdout, "sent\n"); ///
@@ -82,6 +82,7 @@ ssize_t clientRecv(int sockfd, size_t content_length, char **response)
     if ((length =
          recv(sockfd, *response, content_length, 0)) == -1)
     {
+        close(sockfd);
         throw CSocketException(RECV_ERR);
     }
     fprintf(stdout, "received\n"); ///
@@ -89,8 +90,88 @@ ssize_t clientRecv(int sockfd, size_t content_length, char **response)
     return length;
 }
 
+
+CHTTPResponse &clientMain(CHTTPRequest &request)
+{
+    
+    int sockfd;
+    char requesttemp[BUFFERSIZE + 1]; ///
+    char *buffer;
+    CHTTPResponse *response;
+    size_t request_length;
+    ssize_t length;
+    ssize_t response_length;
+    
+    /* Get the host */
+    //TODO get host
+    /*if (!host) {
+        throw CSocketException(NO_HOST);
+    }*/
+    
+    /*** CHANGE THIS, HARDCODED HOST ***/
+    char host[] = "www.google.com";
+    /*** CHANGE THIS, HARDCODED HOST ***/
+    
+    /* Get the request */
+    /*** CHANGE THIS, HARDCODED REQUEST ***/
+    sprintf(requesttemp,
+            "GET %s%s HTTP/1.1\r\n"
+            "Host: %s\r\n"
+            "\r\n\r\n", host, "/", host);
+    request_length = strlen(requesttemp);
+    /*** CHANGE THIS, HARDCODED REQUEST ***/
+    
+    /* Set up connection */
+    sockfd = openClientSocket(host);
+    
+    /* Send the request */
+    length = 0;
+    while ((length += clientSend(sockfd, request_length, requesttemp)) != (signed)request_length)
+    {
+        cout << "Not sent everything yet, trying again\n" << endl;
+    }
+    
+    /* Get incoming response */
+    buffer = (char *)malloc(BUFFERSIZE * (sizeof (char)));
+    length = 0;
+    response_length = 0;
+    try
+    {
+        while ((length = clientRecv(sockfd, BUFFERSIZE, &buffer)) != 0) // only works with connection close
+                                                                        // print message
+        write(1, buffer, length); ///
+    {
+        response_length += length;
+        // TODO treat the data
+    }
+    }
+    catch (CSocketException e)
+    {
+        free(buffer);
+        throw CSocketException(RECV_ERR);
+    }
+    
+    //TODO build the response object
+    
+    /* Clean up 1/2 */
+    close(sockfd);
+    free(buffer);
+    
+    /*** CHANGE THIS, HARDCODED RESPONSE ***/
+    response = new CHTTPResponse("HTTP/1.1 302 Found",
+                                                "Cache-Control: private\r\n                                                Content-Type: text/html; charset=UTF-8c\n                                                Location: http://www.google.se/?gfe_rd=cr&ei=WDsbVOu8N4ir8wfxw4GwDw\r\n                                                Content-Length: 258\r\n                                              Date: Thu, 18 Sep 2014 20:06:48 GMT\r\nServer: GFE/2.0\r\n                                                Alternate-Protocol: 80:quic,p=0.002\r\n                                                \r\n\r\n                                                <HTML><HEAD><meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\">\r\n                                                <TITLE>302 Moved</TITLE></HEAD><BODY>\r\n                                                <H1>302 Moved</H1>\r\n                                                The document has moved\r\n                                                <A HREF=\"http://www.google.se/?gfe_rd=cr&amp;ei=WDsbVOu8N4ir8wfxw4GwDw\">here</A>.\r\n                                                </BODY></HTML>");
+    /*** CHANGE THIS, HARDCODED RESPONSE ***/
+    
+    cout << "\n!!! REACHED THE END !!!\n" << endl;
+    
+    return *response;
+}
+
+
+
+// BACKUP
 // TODO change everything
-int mainClient(int argc, char *argv[])
+int mainClient(char *host)
 {
     int sockfd;
     char request[MAXLINE + 1];
@@ -98,56 +179,53 @@ int mainClient(int argc, char *argv[])
     size_t request_length;
     ssize_t length;
     
-    if (argc != 2) {
-        cerr << "Missing hostname to connect to\n" << endl;
-        return -1;
+    if (!host) {
+        throw CSocketException(NO_HOST);
     }
-    
-    response = (char *)malloc(MAXLINE * (sizeof (char))); //TODO content-length
     
     /*** CHANGE THIS, HARDCODED REQUEST ***/
     
     sprintf(request,
-             "GET %s%s HTTP/1.1\r\n"
-             "Host: %s\r\n"
-             "\r\n\r\n", argv[1], "/", argv[1]);
+            "GET %s%s HTTP/1.1\r\n"
+            "Host: %s\r\n"
+            "\r\n\r\n", host, "/", host);
     request_length = strlen(request);
     
-    //
-    if ((sockfd = openClientSocket(argv[1])) == -1)
+    /*** CHANGE THIS, HARDCODED REQUEST ***/
+    
+    // initialize socket
+    if ((sockfd = openClientSocket(host)) == -1)
     {
-        //TODO exception
-        free(response);
         return -1;
     }
+    // sockfd is now connected
     
     //
-    if ((length = clientSend(sockfd, request_length, request)) == -1)
-    {
-        //TODO exception
-        perror("ERROR send ");
-        close(sockfd);
-        free(response);
-        return -1;
-    }
-    if (length != (signed)request_length)
+    length = 0;
+    while ((length += clientSend(sockfd, request_length, request)) != (signed)request_length)
     {
         fprintf(stderr, "not everything was sent\n");
+        
+        /*if (length == -1)
+         {
+         //TODO exception
+         perror("ERROR send ");
+         close(sockfd);
+         return -1;
+         }*/
     }
     
+    response = (char *)malloc(MAXLINE * (sizeof (char))); //TODO content-length
+    
     //
-    if ((length = clientRecv(sockfd, MAXLINE-1, &response)) == -1)
+    try
     {
-        //TODO exception
-        perror("ERROR recv ");
-        close(sockfd);
-        free(response);
-        return -1;
+        length = clientRecv(sockfd, MAXLINE-1, &response);
     }
-    if (length < MAXLINE) // connection closed
+    catch (CSocketException e)
     {
-        fprintf(stderr, "not everything was received\n"); //TODO correct length
-        // do nothing
+        free(response);
+        throw CSocketException(RECV_ERR);
     }
     
     // print message

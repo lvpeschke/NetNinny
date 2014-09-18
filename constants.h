@@ -3,6 +3,9 @@
 
 #define BUFFERSIZE 1000
 
+#define NO_HOST "Host name is empty"
+//Error that occurs when the host name is NULL.
+
 #define SOCK_ERR "Cannot create socket"
 //Error that occurs when socket cannot be created.
 

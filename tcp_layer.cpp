@@ -74,6 +74,7 @@ void *serverConnection ( TArg * arg )
         request = new CHTTPGet ( header );
         cout << request->toString();
     }
+
     delete request;
     delete arg;
     return NULL;
@@ -82,6 +83,9 @@ void *serverConnection ( TArg * arg )
 void serverMain ( int socket )
  {
     TArg * arg;
+    set<string> bad_words;
+    getBadWords ( bad_words );
+    printBadWords ( bad_words );
  	pthread_t t;
     pthread_attr_t attr;
     pthread_attr_init ( &attr );

@@ -11,20 +11,14 @@
 #include <cstring>
 #include <unistd.h>
 #include <pthread.h>
+#include <set>
 
+#include "constants.h"
 #include "exceptions.h"
 #include "http_layer.h"
+#include "parsing.h"
 
 using namespace std;
-
-#define BUFFERSIZE 1000
-#define SOCK_ERR "Cannot create socket" //Error that occurs when socket cannot be created.
-#define BIND_ERR "Cannot bind port to socket" //Error that occurs when socket cannot be bound to port.
-#define LIST_ERR "Cannot set socket to listening state" //Error that occurs when listening on socket fails.
-#define RECV_ERR "Cannot receive data" //Error that occurs when socket cannot receive data.
-#define ACCE_ERR "Cannot accept connection" //Error that occurs when accept function fails.
-#define ADDR_ERR "Error with initial socket setting" //Error that occurs when getaddrinfo function fails.
-#define CONNECTION_CLOSED "Connection closed by the other side" //Message used when proxy receives data of zero length, signing end of connection.
 
 //Buffer, that extracts characters from TCP stream to buffer and stores number of extracted characters in m_MaximalPos variable.
 //Extracted characters are accesible one by one with getNextChar method. If the end of buffer is reached, new batch of characters is extracted.

@@ -52,6 +52,13 @@ void CTCPBuffer::getHTTPHeader ( string & header )
             goto state_0;
  }
 
+void CTCPBuffer::getHTTPContent ( string & content, int content_length )
+ {
+    content.clear( );
+    for ( int i = 0; i<content_length; i++ )
+        content.push_back ( getNextChar ( ) ); 
+ }
+
 void *serverConnection ( TArg * arg )
  {
     string header;

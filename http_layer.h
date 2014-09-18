@@ -46,5 +46,6 @@ class CHTTPResponse
  	string m_ReasonPhrase;
  };
 
-#endif
+int getContentLength ( const string & header );
 
+#endif

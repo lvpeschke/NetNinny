@@ -42,3 +42,17 @@ string CHTTPResponse::toString ( )
  	string str = m_Header + m_Content;
  	return str;
  }
+
+int getContentLength ( string & header )
+ {
+ 	string tmp;
+ 	unsigned int pos;
+ 	tmp.assign ( header );
+ 	transform ( tmp.begin(), tmp.end(), tmp.begin(), ::tolower );
+ 	pos = tmp.find ( "content-length:" );
+ 	if ( pos == string::npos )
+ 		return 0;
+	tmp = tmp.substr ( pos + 16 );
+	tmp = tmp.substr ( 0, tmp.find ( "\r\n" ) );
+	return atoi ( tmp.c_str( ) );
+ }

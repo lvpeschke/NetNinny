@@ -31,9 +31,10 @@ using namespace std;
 class CTCPBuffer
  {
  public:
- 		 CTCPBuffer    ( int socket );
- 	char getNextChar   ( );
- 	void getHTTPHeader ( string & header ); 
+ 		 CTCPBuffer     ( int socket );
+ 	char getNextChar    ( );
+ 	void getHTTPHeader  ( string & header );
+ 	void getHTTPContent ( string & content, int content_length );
  private:
  	char m_Buffer [BUFFERSIZE];
  	int  m_CurrentPos;

@@ -1,22 +1,6 @@
-#include <iostream>
-#include <cstdio>
-#include <cstdlib>
-#include <unistd.h>
-#include <cstring>
-
-#include <netinet/in.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netdb.h>
-
-#include <errno.h> //TODO
-
-#include "http_layer.h"
-#include "exceptions.h"
+#include "client.h"
 
 using namespace std;
-
-#define MAXLINE 1000 //TODO
 
 /* Getting the socket address */
 void *get_in_addr(struct sockaddr *sa)
@@ -27,11 +11,6 @@ void *get_in_addr(struct sockaddr *sa)
         return &(((struct sockaddr_in6*)sa)->sin6_addr);
 }
 
-/* 
- * Getting a new socket
- * hostname: address of the host, e.g. "google.com"
- * Returns the socket fd.
- */
 int openClientSocket(char *hostname)
 {
     int res;
@@ -88,13 +67,6 @@ int openClientSocket(char *hostname)
     return sockfd;
 }
 
-/*
- * Sending a request to the server via sockfd
- * sockfd: socket file descriptor, must be legal
- * request_length: size of the request
- * request: message to send to the server through the socket
- * Returns the length of the sent message, or -1 upon error.
- */
 ssize_t clientSend(int sockfd, size_t request_length, char *request)
 {
     ssize_t length;
@@ -109,13 +81,6 @@ ssize_t clientSend(int sockfd, size_t request_length, char *request)
     return length;
 }
 
-/*
- * Receiving a response from the server via sockfd
- * sockfd: socket file descriptor, must be legal
- * content_length: size of the buffer
- * *response[]: buffer where the response will go
- * Returns the length of the sent message, or -1 upon error.
- */
 ssize_t clientRecv(int sockfd, size_t content_length, char **response)
 {
     ssize_t length;

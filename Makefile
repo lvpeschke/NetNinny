@@ -10,7 +10,7 @@ main.o: main.cpp
 exceptions.o: exceptions.cpp exceptions.h
 tcp_layer.o: tcp_layer.cpp tcp_layer.h
 http_layer.o: http_layer.cpp http_layer.h
-client.o: client.cpp
+client.o: client.cpp client.h
 
 .PHONY: clean mrproper
 

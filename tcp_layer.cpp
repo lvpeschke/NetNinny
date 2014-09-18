@@ -96,6 +96,7 @@ void serverMain ( int socket )
         socklen_t connection_size = sizeof ( connection );
         arg = new TArg;
         arg->m_Socket = accept ( socket, &connection, &connection_size );
+        arg->m_BadWords = &bad_words;
         if ( arg->m_Socket == -1 )
         {
             throw CSocketException ( ACCE_ERR );

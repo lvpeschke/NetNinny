@@ -39,6 +39,7 @@ class CTCPBuffer
 struct TArg
  {
     int m_Socket;
+    set<string> * m_BadWords;
  };
 void *serverConnection ( TArg * arg ); //Function called for every received connection from client
 

@@ -14,6 +14,7 @@ bool checkBadWords ( const string & str );
 //Reads all bad words of proxy server from file and stores them in a set
 void getBadWords ( set<string> & bad_words );
 
+//Prints all bad words stored in set that is passed to it
 void printBadWords ( const set<string> & bad_words );
 
 #endif

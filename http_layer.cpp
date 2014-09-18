@@ -46,7 +46,7 @@ string CHTTPResponse::toString ( )
 int getContentLength ( string & header )
  {
  	string tmp;
- 	unsigned int pos;
+ 	size_t pos;
  	tmp.assign ( header );
  	transform ( tmp.begin(), tmp.end(), tmp.begin(), ::tolower );
  	pos = tmp.find ( "content-length:" );

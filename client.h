@@ -16,6 +16,7 @@
 
 #include "http_layer.h"
 #include "exceptions.h"
+#include "constants.h"
 
 using namespace std;
 

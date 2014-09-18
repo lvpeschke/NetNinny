@@ -30,35 +30,29 @@ int openClientSocket(char *hostname)
     if ((res =
          getaddrinfo(hostname, "http", &hints, &servinfo)) != 0)
     {
-        //TODO exception
-        fprintf(stderr, "ERROR getaddrinfo: %s\n", gai_strerror(res));
         freeaddrinfo(servinfo);
-        return -1;
+        throw CSocketException (ADDR_ERR);
     }
-    fprintf(stdout, "correct address\n");
+    fprintf(stdout, "correct address\n"); ///
     
     /* Create socket */
-    // Loop?
+    // TODO Loop?
     if ((sockfd =
          socket(servinfo->ai_family, servinfo->ai_socktype, servinfo->ai_protocol)) == -1)
     {
-        //TODO exception
-        perror("ERROR socket ");
-        freeaddrinfo (servinfo);
-        return -1;
+        freeaddrinfo(servinfo);
+        throw CSocketException(SOCK_ERR);
     }
-    fprintf(stdout, "socket\n");
+    fprintf(stdout, "socket\n"); ///
     
     /* Connecting to the server */
     if (connect(sockfd, servinfo->ai_addr, servinfo->ai_addrlen) != 0)
     {
-        //TODO exception
-        perror("ERROR connect ");
-        freeaddrinfo (servinfo);
+        freeaddrinfo(servinfo);
         close(sockfd);
-        return -1;
+        throw CSocketException(CONNECTION_FAIL);
     }
-    fprintf(stdout, "connected\n");
+    fprintf(stdout, "connected\n"); ///
     
     /* Clean up */
     freeaddrinfo(servinfo);
@@ -73,10 +67,9 @@ ssize_t clientSend(int sockfd, size_t request_length, char *request)
     if ((length =
          send(sockfd, request, request_length, 0)) == -1)
     {
-        //TODO exception
-        perror("ERROR send ");
+        throw CSocketException(SEND_ERR);
     }
-    fprintf(stdout, "sent\n");
+    fprintf(stdout, "sent\n"); ///
     
     return length;
 }
@@ -89,30 +82,28 @@ ssize_t clientRecv(int sockfd, size_t content_length, char **response)
     if ((length =
          recv(sockfd, *response, content_length, 0)) == -1)
     {
-        //TODO exception
-        perror("ERROR recv ");
+        throw CSocketException(RECV_ERR);
     }
-    fprintf(stdout, "received\n");
+    fprintf(stdout, "received\n"); ///
     
     return length;
 }
 
-
+// TODO change everything
 int mainClient(int argc, char *argv[])
 {
     int sockfd;
     char request[MAXLINE + 1];
     char *response;
-    response = (char *)malloc(MAXLINE * (sizeof (char))); //TODO content-length
     size_t request_length;
     ssize_t length;
     
     if (argc != 2) {
-        fprintf(stderr,"Missing hostname to connect to\n");
-        free(response);
+        cerr << "Missing hostname to connect to\n" << endl;
         return -1;
     }
     
+    response = (char *)malloc(MAXLINE * (sizeof (char))); //TODO content-length
     
     /*** CHANGE THIS, HARDCODED REQUEST ***/
     

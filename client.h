@@ -21,8 +21,6 @@ using namespace std;
 
 #define MAXLINE 1000 //TODO
 
-//TODO: errors
-
 /*
  * Getting a new socket
  * hostname: address of the host, e.g. "google.com"

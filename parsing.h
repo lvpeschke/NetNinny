@@ -9,7 +9,7 @@
 using namespace std;
 
 //Checks a string for presence of bad words. Returns true if no bad words are present, false otherwise
-bool checkBadWords ( const string & str );
+bool checkBadWords ( const set<string> & bad_words, const string & str );
 
 //Reads all bad words of proxy server from file and stores them in a set
 void getBadWords ( set<string> & bad_words );

@@ -1,7 +1,7 @@
 # Lab2: Net Ninny
 
 ## Questions?
-- How to handle 2-3-… word combinations?  *find() in the C++ library.*
+- How to handle 2-3-… word combinations?  *`find()` in the C++ library.*
 - Forking really necessary? Or threads okay? *Threads are okay.*
 - State machine by character to parse the messages? *Yes.*
 
@@ -12,9 +12,9 @@
 - use one port per msg on the client side (recv)
 - backlog: 10
 - if sending failed (check first), send again
-- use the header 'Connection: close' and enforce it on HTTP 1.1!
+- use the header `Connection: close` and enforce it on HTTP 1.1!
 
-- look at 'Content-type: text' in the response msg before parsing
+- look at `Content-type: text` in the response msg before parsing
 - only filter urls and text!
 - if abusive content found, send 301, then new request for the error page, then forward
 
@@ -31,29 +31,29 @@ url filtering | content filtering|
 
 
 ## What needs to be done
-#### Interface
-Client: 
-CHTTPResponse &mainClient(CHTTPRequest &request)
-// CHHTPRequest always valid 
-// we can then use request.toString().c_str()
-// CHTTP *response = new CHTTPResponse(header, content)
+
+#### Done
+* Threads
+* Server able to get requests
+* Client able to get requests
+* Client able to send request
+* Client able to get response
+* Constants file
+* Constant content redirect response
+* Exceptions
+* Request as abstract object (get) with `to_string` method
+* Response class with `to_string` method
 
 #### Martin
-* constants
+* for the CHTTPRequest: method `string getHost()`
+* for the CHTTResponse: method `string getContentType(const string& header)`
+* for the CHTTResponse: method `bool isTextContent(const string& header)`
 * parse the http: method, url, version, etc.
-* object http_request as an abstract object + to_string method 
 
-* parse for 'Content-type' in the response
-* replace 'Connection: keep-alive' by 'Connection: close' in the request
-* http response class, with to-string (constructor with header and content)
-	* get, set for the content type
+* replace `Connection: keep-alive` by `Connection: close` in the request
 
 #### Lena
-* starting the client part, entirely separated: get IP of the current interface and send hardcoded message to real server + get response
+* Check for errors when the server uses the client
+* Separate TCP and Server files
 
-* use String for the response message
-* make exceptions
-* client: gets a request object and returns a response object
-* create response dynamically (new)
-
-
+* Start report

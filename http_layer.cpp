@@ -43,7 +43,7 @@ string CHTTPResponse::toString ( )
  	return str;
  }
 
-int getContentLength ( string & header )
+int getContentLength ( const string & header )
  {
  	string tmp;
  	size_t pos;

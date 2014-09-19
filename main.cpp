@@ -32,14 +32,14 @@ int main ( int argc, char * argv [] )
  	
  	try { socket = openServerSocket ( port ); }
  	catch ( CSocketException e ) { cout << e << endl; exit ( EXIT_FAILURE ); }
-     //serverMain ( socket );
+    serverMain ( socket );
  	close ( socket );
      
     cout << "Client code" << endl;
 
-     //mainClient(argv[2]);
+    /*mainClient(argv[2]);
     CHTTPRequest *request = NULL;
-    CHTTPResponse res = clientMain(*request);
+    CHTTPResponse res = clientMain(*request);*/
      
      return 0;
  }

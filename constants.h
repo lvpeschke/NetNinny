@@ -3,6 +3,12 @@
 
 #define BUFFERSIZE 1000
 
+#define BAD_CONTENT_HEADER "HTTP/1.1 302 Found\r\n Location: http://www.ida.liu.se/~TDTS04/labs/2011/ass2/error2.html\r\n \rn"
+//Header used in the HTTP response in case of bad content
+
+#define BAD_CONTENT_CONTENT ""
+//Content used in the HTTP response in case of bad content
+
 #define NO_HOST "Host name is empty"
 //Error that occurs when the host name is NULL.
 

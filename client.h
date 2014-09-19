@@ -12,22 +12,20 @@
 #include <sys/socket.h>
 #include <netdb.h>
 
-#include <errno.h> //TODO
-
+#include "tcp_layer.h"
 #include "http_layer.h"
+#include "parsing.h"
 #include "exceptions.h"
 #include "constants.h"
 
 using namespace std;
-
-#define MAXLINE 1000 //TODO
 
 /*
  * Getting a new socket
  * hostname: address of the host, e.g. "google.com"
  * Returns the socket fd.
  */
-int openClientSocket(char *hostname);
+int openClientSocket(const char* hostname);
 
 /*
  * Sending a request to the server via sockfd
@@ -36,32 +34,23 @@ int openClientSocket(char *hostname);
  * request: message to send to the server through the socket
  * Returns the length of the sent message, or -1 upon error.
  */
-ssize_t clientSend(int sockfd, size_t request_length, char *request);
+ssize_t clientSend(int sockfd, size_t request_length, const char* request);
 
 /*
  * Receiving a response from the server via sockfd
  * sockfd: socket file descriptor, must be legal
- * content_length: size of the buffer
- * *response[]: buffer where the response will go
+ * response_length: size of the buffer
+ * response: buffer where the response will go
  * Returns the length of the sent message, or -1 upon error.
  */
-ssize_t clientRecv(int sockfd, size_t content_length, char **response);
+/*ssize_t clientRecv(int sockfd, size_t response_length, char** response);*/
 
-//TODO: main function that processes one request
-int mainClient(char *host);
-
-
-/*
- Client: CHTTPResponse &mainClient(CHTTPRequest &request)
- // CHHTPRequest always valid
- // we can then use request.toString().c_str()
- // CHTTP *response = new CHTTPResponse(header, content)
- */
 /*
  * Sending an HTTP request and getting an HTTP response
  * request: a valid HTTP request object
- * Returns an HTTP response object.
+ * badWords: set of not permitted words
+ * Returns a valid HTTP response object.
  */
-CHTTPResponse &clientMain(CHTTPRequest &request);
+CHTTPResponse& clientMain(CHTTPRequest& request, const set<string>& badWords);
 
 #endif

@@ -1,3 +1,11 @@
+/* client.h
+ *
+ * Written by  : Chvatal Martin & Peschke Lena
+ * Written for : LiU, TDTS06, lab 2
+ * Date        : Sept. 2014
+ * Version     : 1.0
+ */
+
 #ifndef CLIENT_H
 #define CLIENT_H
 
@@ -23,7 +31,7 @@ using namespace std;
 /*
  * Getting a new socket
  * hostname: address of the host, e.g. "google.com"
- * Returns the socket fd.
+ * Returns the socket file descriptor.
  */
 int openClientSocket(const char* hostname);
 
@@ -49,7 +57,9 @@ ssize_t clientSend(int sockfd, size_t request_length, const char* request);
  * Sending an HTTP request and getting an HTTP response
  * request: a valid HTTP request object
  * badWords: set of not permitted words
- * Returns a valid HTTP response object.
+ * Returns a valid HTTP response object. Either the one
+ * returned by the external server, or the default 
+ * redirection.
  */
 CHTTPResponse& clientMain(CHTTPRequest& request, const set<string>& badWords);
 

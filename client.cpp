@@ -1,3 +1,11 @@
+/* client.cpp
+ *
+ * Written by  : Chvatal Martin & Peschke Lena
+ * Written for : LiU, TDTS06, lab 2
+ * Date        : Sept. 2014
+ * Version     : 1.0
+ */
+
 #include "client.h"
 
 using namespace std;
@@ -22,7 +30,7 @@ int openClientSocket(const char *hostname)
   
   // Checking for the argument
   if (hostname == 0)
-    throw CSocketException(NO_HOST);
+    throw CSocketException(HOST_ERR);
   
   // Getting information about the server
   hints.ai_family = AF_UNSPEC;
@@ -30,7 +38,7 @@ int openClientSocket(const char *hostname)
   hints.ai_flags = AI_PASSIVE;
   res = getaddrinfo(hostname, "http", &hints, &servinfo);
   if (res != 0)
-    throw CSocketException (ADDR_ERR);
+    throw CSocketException(ADDR_ERR);
   fprintf(stdout, "correct address\n"); ///
   
   // Creating the socket
@@ -46,7 +54,7 @@ int openClientSocket(const char *hostname)
   if (res != 0) {
     freeaddrinfo(servinfo);
     close(sockfd);
-    throw CSocketException(CONNECTION_FAIL);
+    throw CSocketException(CONN_ERR);
   }
   fprintf(stdout, "connected\n"); ///
   
@@ -98,7 +106,7 @@ CHTTPResponse &clientMain(CHTTPRequest &request, const set<string> &badWords)
   
   
   if (host == 0) {
-   throw CSocketException(NO_HOST);
+   throw CSocketException(HOST_ERR);
   }
   request_str = request.toString().c_str();
   request_length = request.toString().length();
@@ -137,13 +145,13 @@ CHTTPResponse &clientMain(CHTTPRequest &request, const set<string> &badWords)
   // Reconstructing the HTTP
   CHTTPResponse* response;
   
-  bool ok = checkBadWords(badWords, content);
-  if (ok) {
+  //bool ok = checkBadWords(badWords, content);
+  //if (ok) {
     response = new CHTTPResponse(header, content);
-  }
-  else {
-    response = new CHTTPResponse(BAD_CONTENT_HEADER, BAD_CONTENT_CONTENT);
-  }
+  //}
+  //else {
+  //  response = new CHTTPResponse(BAD_CONTENT_HEADER, BAD_CONTENT_CONTENT);
+  //}
   
   cout << "\n!!! REACHED THE END !!!\n" << endl;
   return *response;

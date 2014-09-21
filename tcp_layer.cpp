@@ -1,3 +1,11 @@
+/* tcp_layer.cpp
+ *
+ * Written by  : Chvatal Martin & Peschke Lena
+ * Written for : LiU, TDTS06, lab 2
+ * Date        : Sept. 2014
+ * Version     : 1.0
+ */
+
 #include "tcp_layer.h"
 
 CTCPBuffer::CTCPBuffer ( int socket )

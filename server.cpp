@@ -1,3 +1,11 @@
+/* server.cpp
+ *
+ * Written by  : Chvatal Martin & Peschke Lena
+ * Written for : LiU, TDTS06, lab 2
+ * Date        : Sept. 2014
+ * Version     : 1.0
+ */
+
 #include "server.h"
 
 void *serverConnection ( TArg * arg )
@@ -5,18 +13,25 @@ void *serverConnection ( TArg * arg )
   string header;
   string method;
   CHTTPRequest * request = NULL;
+  
   cout << "Connection accepted" << endl;
   CTCPBuffer buffer ( arg->m_Socket );
-  try { buffer.getHTTPHeader ( header ); }
-  catch ( CSocketException e ) { cout << e << endl; return NULL; }
+  
+  try {
+    buffer.getHTTPHeader ( header );
+  }
+  catch ( CSocketException e ) {
+    cout << e << endl; return NULL;
+  }
   method = header.substr( 0, header.find_first_of(' ') );
-  if ( !method.compare ( "GET" ) )
-  {
+  if ( !method.compare ( "GET" ) ) {
     request = new CHTTPGet ( header );
     cout << request->toString();
   }
+  
   if ( !checkBadWords ( *(arg->m_BadWords), request->getURL( ) ) )
     redirect ( );
+  
   delete request;
   delete arg;
   return NULL;
@@ -32,6 +47,7 @@ void serverMain ( int socket )
   pthread_attr_t attr;
   pthread_attr_init ( &attr );
   pthread_attr_setdetachstate( &attr, PTHREAD_CREATE_DETACHED );
+  
   while ( 1 )
   {
     struct sockaddr connection;
@@ -39,6 +55,7 @@ void serverMain ( int socket )
     arg = new TArg;
     arg->m_Socket = accept ( socket, &connection, &connection_size );
     arg->m_BadWords = &bad_words;
+    
     if ( arg->m_Socket == -1 )
     {
       throw CSocketException ( ACCE_ERR );
@@ -51,8 +68,8 @@ void serverMain ( int socket )
 
 int openServerSocket ( const char * port )
 {
- 	struct addrinfo* servinfo;
- 	int    sockfd;
+  struct addrinfo* servinfo;
+  int    sockfd;
   
   if ( getaddrinfo ( "127.0.0.1", port, NULL, &servinfo ) )
     throw CSocketException ( ADDR_ERR );

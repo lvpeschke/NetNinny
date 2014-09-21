@@ -1,3 +1,11 @@
+/* parsing.cpp
+ *
+ * Written by  : Chvatal Martin & Peschke Lena
+ * Written for : LiU, TDTS06, lab 2
+ * Date        : Sept. 2014
+ * Version     : 1.0
+ */
+
 #include "parsing.h"
 #include "constants.h"
 

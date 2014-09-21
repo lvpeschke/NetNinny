@@ -1,3 +1,11 @@
+/* http_layer.cpp
+ *
+ * Written by  : Chvatal Martin & Peschke Lena
+ * Written for : LiU, TDTS06, lab 2
+ * Date        : Sept. 2014
+ * Version     : 1.0
+ */
+
 #include "http_layer.h"
 
 CHTTPRequest::CHTTPRequest ( const string & header )
@@ -6,7 +14,8 @@ CHTTPRequest::CHTTPRequest ( const string & header )
  	stringstream ss ( header );
  	m_Header.assign ( header );
  	lowerCaseHeader.assign ( header );
- 	transform ( lowerCaseHeader.begin(), lowerCaseHeader.end(), lowerCaseHeader.begin(), ::tolower );
+ 	transform ( lowerCaseHeader.begin(), lowerCaseHeader.end(),
+                lowerCaseHeader.begin(), ::tolower );
  	string test;
  	ss >> m_Method;
  	ss >> m_URL;

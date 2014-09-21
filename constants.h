@@ -1,10 +1,18 @@
+/* constants.cpp
+ *
+ * Written by  : Chvatal Martin & Peschke Lena
+ * Written for : LiU, TDTS06, lab 2
+ * Date        : Sept. 2014
+ * Version     : 1.0
+ */
+
 #ifndef CONSTANTS_565441654
 #define CONSTANTS_565441654
 
 #define BUFFERSIZE 1000
 
 // Header used in the HTTP response in case of bad url.
-#deine BAD_URL_HEADER "HTTP/1.1 302 Found\r\n Location: http://www.ida.liu.se/~TDTS04/labs/2011/ass2/error2.html\r\n \rn"
+#define BAD_URL_HEADER "HTTP/1.1 302 Found\r\n Location: http://www.ida.liu.se/~TDTS04/labs/2011/ass2/error2.html\r\n \rn"
 
 // Content used in the HTTP response in case of bad url.
 #define BAD_URL_CONTENT ""
@@ -16,7 +24,7 @@
 #define BAD_CONTENT_CONTENT ""
 
 // Error that occurs when the host name is NULL.
-#define NO_HOST "Host name is empty"
+#define HOST_ERR "Host name is empty"
 
 // Error that occurs when socket cannot be created.
 #define SOCK_ERR "Cannot create socket"
@@ -40,7 +48,7 @@
 #define ADDR_ERR "Error with initial socket setting" 
 
 // Error that occurs when connect function fails.
-#define CONNECTION_FAIL "Connection to socket failed"
+#define CONN_ERR "Connection to socket failed"
 
 // Message used when proxy receives data of zero length, signing end of connection.
 #define CONNECTION_CLOSED "Connection closed by the other side"

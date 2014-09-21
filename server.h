@@ -1,3 +1,11 @@
+/* server.h
+ *
+ * Written by  : Chvatal Martin & Peschke Lena
+ * Written for : LiU, TDTS06, lab 2
+ * Date        : Sept. 2014
+ * Version     : 1.0
+ */
+
 #ifndef SERVER_H
 #define SERVER_H
 
@@ -21,15 +29,31 @@
 
 using namespace std;
 
+// TODO COMMENT
 struct TArg
 {
   int m_Socket;
   set<string> * m_BadWords;
 };
-void *serverConnection ( TArg * arg ); //Function called for every received connection from client
 
-void serverMain ( int socket ); //Main server loop that is accepting new connections and creating new threads for them
+/*
+ * Connecting the proxy-server to the client
+ * after an accepted connection on the socket
+ * arg: the argument structure needed to process the connection
+ */
+void *serverConnection ( TArg * arg );
 
-int openServerSocket ( const char * port ); //Function that opens a socket and prepares it for connections
+/*
+ * Main server loop accepting new connections and creating new threads for them
+ * socket: the socket file descriptor on which connections are accepted
+ */
+void serverMain ( int socket );
+
+/*
+ * Opening a socket and preparing it for connections
+ * port: the port number on which to open the socket
+ * Returns a file descriptor for the socket upon success.
+ */
+int openServerSocket ( const char * port );
 
 #endif

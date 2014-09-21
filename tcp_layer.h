@@ -36,15 +36,4 @@ class CTCPBuffer
  	int  m_Socket;
  };
 
-struct TArg
- {
-    int m_Socket;
-    set<string> * m_BadWords;
- };
-void *serverConnection ( TArg * arg ); //Function called for every received connection from client
-
-void serverMain ( int socket ); //Main server loop that is accepting new connections and creating new threads for them
-
-int openServerSocket ( const char * port ); //Function that opens a socket and prepares it for connections
-
 #endif

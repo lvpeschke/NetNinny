@@ -14,6 +14,7 @@ using namespace std;
 #include "exceptions.h"
 #include "tcp_layer.h"
 #include "client.h"
+#include "server.h"
 
 //Reads port number from list of program arguments, gets server socket from openServerSocket function and checks for socket errors.
 //Calls function serverMain that contains the main server loop.

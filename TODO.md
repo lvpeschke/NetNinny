@@ -43,6 +43,7 @@ url filtering | content filtering|
 * Exceptions
 * Request as abstract object (get) with `to_string` method
 * Response class with `to_string` method
+* Separate TCP and Server files
 
 #### Martin
 * for the CHTTPRequest: method `string getHost()`
@@ -54,6 +55,5 @@ url filtering | content filtering|
 
 #### Lena
 * Check for errors when the server uses the client
-* Separate TCP and Server files
 
 * Start report

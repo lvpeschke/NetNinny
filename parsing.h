@@ -18,4 +18,4 @@ void getBadWords ( set<string> & bad_words );
 void printBadWords ( const set<string> & bad_words );
 
 #endif
-
+ 

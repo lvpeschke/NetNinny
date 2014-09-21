@@ -38,12 +38,24 @@ string CHTTPGet::toString ( )
 
 CHTTPResponse::CHTTPResponse ( const string & header, const string & content )
  {
+ 	string tmp;
+ 	unsigned int pos;
  	m_Header.assign ( header );
  	m_Content.assign ( content );
+ 	tmp.assign ( header );
+ 	transform ( tmp.begin(), tmp.end(), tmp.begin(), ::tolower );
  	stringstream ss (header);
  	ss >> m_HTTPVersion;
  	ss >> m_StatusCode;
  	ss >> m_ReasonPhrase;
+ 	pos = tmp.find ( "content-type:" );
+ 	if ( pos == string::npos )
+ 		m_ContentType.clear ( );
+ 	else
+ 	{
+ 		tmp = tmp.substr (  pos + 14 );
+ 		m_ContentType = tmp.substr ( 0, tmp.find ( "\r\n" ) );	
+ 	}
  }
 
 string CHTTPResponse::toString ( )

@@ -33,7 +33,7 @@ using namespace std;
 struct TArg
 {
   int m_Socket;
-  set<string> * m_BadWords;
+  set<string> m_BadWords;
 };
 
 /*

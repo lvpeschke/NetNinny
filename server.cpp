@@ -28,8 +28,14 @@ void *serverConnection ( TArg * arg )
     request = new CHTTPGet ( header );
     cout << request->toString();
   }
-  
-  if ( !checkBadWords ( *(arg->m_BadWords), request->getURL( ) ) )
+  else
+  {
+    delete arg;
+    cout << "PREPARE TO BE ASSIMILATED. RESISTANCE IS FUTILE." << endl;
+    cout << header;
+    return NULL;
+  }
+  if ( !checkBadWords ( arg->m_BadWords, request->getURL( ) ) )
     redirect ( );
   
   delete request;
@@ -54,8 +60,7 @@ void serverMain ( int socket )
     socklen_t connection_size = sizeof ( connection );
     arg = new TArg;
     arg->m_Socket = accept ( socket, &connection, &connection_size );
-    arg->m_BadWords = &bad_words;
-    
+    arg->m_BadWords = bad_words;
     if ( arg->m_Socket == -1 )
     {
       throw CSocketException ( ACCE_ERR );

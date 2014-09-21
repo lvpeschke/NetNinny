@@ -25,8 +25,9 @@ class CHTTPRequest
  public:
  	               CHTTPRequest ( const string & header );
 	virtual       ~CHTTPRequest ( ) { }
- 	virtual string toString (  ) = 0;
- 			string getURL ( ) { return m_URL; }
+ 	virtual string toString ( ) = 0;
+ 			string getURL   ( ) { return m_URL;  }
+ 			string getHost  ( ) { return m_Host; }
  protected:
  	string m_Method;
  	string m_URL;
@@ -54,12 +55,14 @@ class CHTTPResponse
  public:
  	       CHTTPResponse ( const string & header, const string & content );
  	string toString (  );
+ 	string getContentType ( ) { return m_ContentType; }
  private:
  	string m_Header;
  	string m_Content;
  	string m_HTTPVersion;
  	string m_StatusCode;
  	string m_ReasonPhrase;
+ 	string m_ContentType;
  };
 
 /*

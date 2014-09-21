@@ -1,3 +1,11 @@
+/* http_layer.h
+ *
+ * Written by  : Chvatal Martin & Peschke Lena
+ * Written for : LiU, TDTS06, lab 2
+ * Date        : Sept. 2014
+ * Version     : 1.0
+ */
+
 #ifndef HTTPLAYER_937236837
 #define HTTPLAYER_937236837
 
@@ -9,7 +17,9 @@
 
 using namespace std;
 
-//Abstract class containing things common to all HTTP requests
+/*
+ * Abstract class containing a pattern for all HTTP requests
+ */
 class CHTTPRequest
  {
  public:
@@ -25,7 +35,9 @@ class CHTTPRequest
  	string m_Header;
  };
 
-//Class representing HTTP GET request
+/*
+ * Class representing a HTTP GET request
+ */
 class CHTTPGet : public CHTTPRequest
  {
  public:
@@ -34,6 +46,9 @@ class CHTTPGet : public CHTTPRequest
  	string toString ( );
  };
 
+/*
+ * Class representing a HTTP response
+ */
 class CHTTPResponse
  {
  public:
@@ -47,9 +62,19 @@ class CHTTPResponse
  	string m_ReasonPhrase;
  };
 
+/*
+ * Extracts the lenght of the content from the HTTP header
+ * header: a HTTP header
+ * Returns the length of the HTTP content.
+ */
 int getContentLength ( const string & header );
 
-//TO BE IMPLEMENTED LATER
+/*
+ * Redirects the response
+ * ???
+ * ???
+ */
+// TODO: implement
 void redirect (  );
 
 #endif

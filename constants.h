@@ -1,20 +1,56 @@
+/* constants.cpp
+ *
+ * Written by  : Chvatal Martin & Peschke Lena
+ * Written for : LiU, TDTS06, lab 2
+ * Date        : Sept. 2014
+ * Version     : 1.0
+ */
+
 #ifndef CONSTANTS_565441654
 #define CONSTANTS_565441654
 
 #define BUFFERSIZE 1000
 
-#define SOCK_ERR "Cannot create socket" //Error that occurs when socket cannot be created.
+// Header used in the HTTP response in case of bad url.
+#define BAD_URL_HEADER "HTTP/1.1 302 Found\r\n Location: http://www.ida.liu.se/~TDTS04/labs/2011/ass2/error2.html\r\n \rn"
 
-#define BIND_ERR "Cannot bind port to socket" //Error that occurs when socket cannot be bound to port.
+// Content used in the HTTP response in case of bad url.
+#define BAD_URL_CONTENT ""
 
-#define LIST_ERR "Cannot set socket to listening state" //Error that occurs when listening on socket fails.
+// Header used in the HTTP response in case of bad content.
+#define BAD_CONTENT_HEADER "HTTP/1.1 302 Found\r\n Location: http://www.ida.liu.se/~TDTS04/labs/2011/ass2/error1.html\r\n \rn"
 
-#define RECV_ERR "Cannot receive data" //Error that occurs when socket cannot receive data.
+// Content used in the HTTP response in case of bad content.
+#define BAD_CONTENT_CONTENT ""
 
-#define ACCE_ERR "Cannot accept connection" //Error that occurs when accept function fails.
+// Error that occurs when the host name is NULL.
+#define HOST_ERR "Host name is empty"
 
-#define ADDR_ERR "Error with initial socket setting" //Error that occurs when getaddrinfo function fails.
+// Error that occurs when socket cannot be created.
+#define SOCK_ERR "Cannot create socket"
 
-#define CONNECTION_CLOSED "Connection closed by the other side" //Message used when proxy receives data of zero length, signing end of connection.
+// Error that occurs when socket cannot be bound to port.
+#define BIND_ERR "Cannot bind port to socket" 
+
+// Error that occurs when listening on socket fails.
+#define LIST_ERR "Cannot set socket to listening state" 
+
+// Error that occurs when sending data fails.
+#define SEND_ERR "Cannot send data through socket"
+
+// Error that occurs when socket cannot receive data.
+#define RECV_ERR "Cannot receive data from the socket" 
+
+// Error that occurs when accept function fails.
+#define ACCE_ERR "Cannot accept connection" 
+
+// Error that occurs when getaddrinfo function fails.
+#define ADDR_ERR "Error with initial socket setting" 
+
+// Error that occurs when connect function fails.
+#define CONN_ERR "Connection to socket failed"
+
+// Message used when proxy receives data of zero length, signing end of connection.
+#define CONNECTION_CLOSED "Connection closed by the other side"
 
 #endif

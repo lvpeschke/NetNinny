@@ -1,0 +1,172 @@
+%--------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%--------------------------------------------------------------------------
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage[left=3cm,right=3cm,top=2.5cm,bottom=2.5cm]{geometry}
+
+\usepackage{fancyhdr} % Required for custom headers
+\usepackage{lastpage} % Required to determine the last page for the footer
+\usepackage{extramarks} % Required for headers and footers
+\usepackage[usenames,dvipsnames]{color} % Required for custom colors
+\usepackage{graphicx} % Required to insert images
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{listings} % Required for insertion of code
+%\usepackage{courier} % Required for the courier font
+\usepackage{verbatim}
+\usepackage{multirow}
+\usepackage{eurosym}
+\usepackage{url}
+\usepackage{hyperref}
+
+\lstset{
+	tabsize=4,
+	rulecolor=,
+    basicstyle=\scriptsize,
+    upquote=true,
+    aboveskip={1.5\baselineskip},
+    columns=fixed,
+    showstringspaces=false,
+    extendedchars=true,
+    breaklines=true,
+    %prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+    frame=single,
+    showtabs=false,
+    showspaces=false,
+    showstringspaces=false,
+    numbers=left
+}
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+
+% sections in Alph
+% \renewcommand{\thesection}{\Alph{section}}
+
+\begin{document}
+	
+%--------------------------------------------------------------------------
+%	TITLE PAGE
+%--------------------------------------------------------------------------
+\begin{titlepage}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+\centering % Center everything on the page
+ 
+%	HEADING SECTIONS
+\begin{figure}[!h]
+	\begin{center}
+	\includegraphics[height=4cm]{liu.jpg}
+	\end{center}
+\end{figure}
+
+%\null
+%\vspace{1cm}
+%\textsc{\Large Linköping University}\\[1cm] % Name of your university/college
+\textsc{\large Department of Computer and Information Science}\\[0.5cm] % Major heading such as course name
+\textsc{\large TDTS06 Computer Networks}\\[2.5cm] % Minor heading such as course title
+
+%	TITLE SECTION
+
+\HRule \\[0.4cm]
+{ \LARGE \bfseries Net Ninny: A Web Proxy Based Service\\[0.4cm] % Title of your document
+\Large \bfseries Report} \\[0.4cm]
+
+\HRule \\[1.5cm]
+
+
+%	AUTHOR SECTION
+
+\large
+\begin{centering}
+Group C/D 13 \\[0.2cm]
+\end{centering}
+{\begin{tabular}{lll}
+\textsc{Chvátal} & Martin & march011@student.liu.se\\
+\textsc{Peschke} & Lena & lenpe782@student.liu.se\\
+\end{tabular}}
+\\[1.5cm]
+
+\normalsize
+Teaching assistant :\\[0.2cm]
+{\begin{tabular}{ll}
+\textsc{Schmidt} Johannes & johannes.schmidt@liu.se \\
+\end{tabular}}
+\\[2cm]
+
+%	DATE SECTION
+\vfill
+{\normalsize \today} % Date, change the \today to a set date if you want to be precise
+
+\newpage
+
+\end{titlepage}
+
+%--------------------------------------------------------------------------
+%	TABLE OF CONTENTS
+%--------------------------------------------------------------------------
+
+\pagenumbering{gobble}
+\clearpage
+\thispagestyle{empty}
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+
+%--------------------------------------------------------------------------
+%	CONTENT
+%--------------------------------------------------------------------------
+
+\section{Introduction}
+
+% Talk about HTTP, TCP socket programming
+
+% Proxy: what it is
+
+% We chose C++
+
+\section{Manual}
+\subsection{How to use it}
+
+% compile with make
+% configure: browser
+% use with terminal instruction
+
+\subsection{How it works}
+
+% req 2: server with CTCPBuffer, then gives it to client
+% req 3: server side when parsing url
+% req 6: ???
+% req 7: command line argument
+% req 8: client side, looks for Content-type:
+
+% High level algorithm + details
+% Simple drawing of prep. question 3
+% Data transfer via  recv and send
+% Connection close and keep alive, why
+% RFC standard for the use of proxies
+
+\section{Testing}
+\subsection{Several cases}
+\paragraph{A simple text file}
+\paragraph{A simple HTML file}
+\paragraph{An HTML file with a bad name}
+\paragraph{An HTML file with a good name but bad content}
+\paragraph{A valid Google request}
+% others
+\paragraph{A Google request with bad content}
+\paragraph{A YouTube video}
+\paragraph{A tour through Wikipedia}
+\subsection{Summary of the available services} 
+
+\section{Conclusion}
+% possible improvements
+
+    
+\end{document}

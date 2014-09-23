@@ -37,6 +37,9 @@ void *serverConnection ( TArg * arg )
   }
   if ( !checkBadWords ( arg->m_BadWords, request->getURL( ) ) )
     redirect ( );
+  // added
+  //else
+  //  CHTTPResponse = client(request);
   
   delete request;
   delete arg;

@@ -45,15 +45,17 @@ url filtering | content filtering|
 * Response class with `to_string` method
 * Separate TCP and Server files
 
-#### Martin
 * for the CHTTPRequest: method `string getHost()`
 * for the CHTTResponse: method `string getContentType(const string& header)`
-* for the CHTTResponse: method `bool isTextContent(const string& header)`
-* parse the http: method, url, version, etc.
+
+#### Martin
+* for the CHTTResponse: method `bool isTextContent(const string& header)` (optional)
 
 * replace `Connection: keep-alive` by `Connection: close` in the request
+
+* bind server and client in the threads
 
 #### Lena
 * Check for errors when the server uses the client
 
-* Start report
+* Write report

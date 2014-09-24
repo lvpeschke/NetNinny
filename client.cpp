@@ -101,8 +101,8 @@ CHTTPResponse &clientMain(CHTTPRequest &request, const set<string> &badWords)
   size_t request_length;
   
   // Getting the information needed for the request
-  //host = request.getHost().c_str(); // TODO
-  host = "www.google.com";
+  host = request.getHost().c_str();
+  //host = "www.google.com";
   
   
   if (host == 0) {
@@ -139,19 +139,27 @@ CHTTPResponse &clientMain(CHTTPRequest &request, const set<string> &badWords)
   // Cleaning up
   close(sockfd);
   
-  //TODO: get the content type and then maybe filter
-  //bool isText = isTextContent(header);
+  //TODO get content type here, so that we only create 1 object
   
   // Reconstructing the HTTP
-  CHTTPResponse* response;
+  CHTTPResponse* response = new CHTTPResponse(header, content);
   
-  //bool ok = checkBadWords(badWords, content);
-  //if (ok) {
-    response = new CHTTPResponse(header, content);
-  //}
-  //else {
-  //  response = new CHTTPResponse(BAD_CONTENT_HEADER, BAD_CONTENT_CONTENT);
-  //}
+  // What is the type of content ?
+  const string text = "text";
+  bool isText = (response->getContentType().find(text) != string::npos); // TEST
+  
+  if (isText) {
+    bool ok = checkBadWords(badWords, content);
+    
+    if (!ok) {
+      delete response;
+      
+      CHTTPResponse* alt_response = new CHTTPResponse(BAD_CONTENT_HEADER, BAD_CONTENT_CONTENT);
+
+      cout << "\n!!! REACHED THE ALTERNATIVE END !!!\n" << endl;      
+      return *alt_response;
+    }
+  }
   
   cout << "\n!!! REACHED THE END !!!\n" << endl;
   return *response;

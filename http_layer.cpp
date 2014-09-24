@@ -39,7 +39,7 @@ string CHTTPGet::toString ( )
 CHTTPResponse::CHTTPResponse ( const string & header, const string & content )
  {
  	string tmp;
- 	unsigned int pos;
+ 	size_t pos;
  	m_Header.assign ( header );
  	m_Content.assign ( content );
  	tmp.assign ( header );

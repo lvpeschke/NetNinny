@@ -18,7 +18,7 @@
 #define BAD_URL_CONTENT ""
 
 // Header used in the HTTP response in case of bad content.
-#define BAD_CONTENT_HEADER "HTTP/1.1 302 Found\r\n Location: http://www.ida.liu.se/~TDTS04/labs/2011/ass2/error1.html\r\n \rn"
+#define BAD_CONTENT_HEADER "HTTP/1.1 302 Found\r\nLocation: http://www.ida.liu.se/~TDTS04/labs/2011/ass2/error1.html\r\nConnection: close\r\n\r\n"
 
 // Content used in the HTTP response in case of bad content.
 #define BAD_CONTENT_CONTENT ""

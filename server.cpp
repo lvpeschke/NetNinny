@@ -7,13 +7,14 @@
  */
 
 #include "server.h"
+#include "client.h"
 
 void *serverConnection ( TArg * arg )
 {
   string header;
   string method;
   CHTTPRequest * request = NULL;
-  
+
   cout << "Connection accepted" << endl;
   CTCPBuffer buffer ( arg->m_Socket );
   
@@ -36,10 +37,14 @@ void *serverConnection ( TArg * arg )
     return NULL;
   }
   if ( !checkBadWords ( arg->m_BadWords, request->getURL( ) ) )
-    redirect ( );
-  // added
-  //else
-  //  CHTTPResponse = client(request);
+  {
+    send ( arg->m_Socket, BAD_CONTENT_HEADER, sizeof ( BAD_CONTENT_HEADER ), 0 );
+    delete request;
+    delete arg;
+    return NULL;
+  }
+  CHTTPResponse & response = clientMain ( *request, arg->m_BadWords );
+  send ( arg->m_Socket, response.toString ( ).c_str ( ), response.toString ( ).length(), 0);
   
   delete request;
   delete arg;

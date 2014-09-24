@@ -124,6 +124,8 @@ CHTTPResponse &clientMain(CHTTPRequest &request, const set<string> &badWords)
   
   // Sending the request
   length = 0;
+
+  //What does this mean? What does it do? 
   while (length != (signed)request_length) {
     length += clientSend(sockfd, request_length, request_str);
     cout << "Not sent everything yet, trying again\n" << endl; ///
@@ -146,7 +148,7 @@ CHTTPResponse &clientMain(CHTTPRequest &request, const set<string> &badWords)
   
   // What is the type of content ?
   const string text = "text";
-  
+
   if (response->getContentType().find(text) != string::npos) {
     
     if (!checkBadWords(badWords, content)) {

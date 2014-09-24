@@ -146,12 +146,10 @@ CHTTPResponse &clientMain(CHTTPRequest &request, const set<string> &badWords)
   
   // What is the type of content ?
   const string text = "text";
-  bool isText = (response->getContentType().find(text) != string::npos); // TEST
   
-  if (isText) {
-    bool ok = checkBadWords(badWords, content);
+  if (response->getContentType().find(text) != string::npos) {
     
-    if (!ok) {
+    if (!checkBadWords(badWords, content)) {
       delete response;
       
       CHTTPResponse* alt_response = new CHTTPResponse(BAD_CONTENT_HEADER, BAD_CONTENT_CONTENT);

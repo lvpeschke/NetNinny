@@ -15,7 +15,7 @@ void *serverConnection ( TArg * arg )
   string method;
   CHTTPRequest * request = NULL;
 
-  cout << "Connection accepted" << endl;
+  cout << endl << "Connection accepted" << endl << endl;
   CTCPBuffer buffer ( arg->m_Socket );
   
   try {
@@ -27,25 +27,33 @@ void *serverConnection ( TArg * arg )
   method = header.substr( 0, header.find_first_of(' ') );
   if ( !method.compare ( "GET" ) ) {
     request = new CHTTPGet ( header );
-    cout << request->toString();
   }
   else
   {
     delete arg;
     cout << "PREPARE TO BE ASSIMILATED. RESISTANCE IS FUTILE." << endl;
-    cout << header;
+//    cout << header;
     return NULL;
   }
   if ( !checkBadWords ( arg->m_BadWords, request->getURL( ) ) )
   {
-    send ( arg->m_Socket, BAD_CONTENT_HEADER, sizeof ( BAD_CONTENT_HEADER ), 0 );
+    cout << BAD_CONTENT_HEADER;
+    send ( arg->m_Socket, BAD_URL_HEADER, sizeof ( BAD_URL_HEADER ), 0 );
     delete request;
     delete arg;
     return NULL;
   }
-  CHTTPResponse & response = clientMain ( *request, arg->m_BadWords );
-  send ( arg->m_Socket, response.toString ( ).c_str ( ), response.toString ( ).length(), 0);
-  
+  try 
+  { 
+    CHTTPResponse & response = clientMain ( *request, arg->m_BadWords ); 
+//    cout << response.toString ( );
+    send ( arg->m_Socket, response.toString ( ).c_str ( ), response.toString ( ).length(), 0);
+    delete &response;
+  }
+  catch ( CSocketException e ) 
+  { 
+    cout << e << endl;
+  }
   delete request;
   delete arg;
   return NULL;
@@ -56,8 +64,7 @@ void serverMain ( int socket )
   TArg * arg;
   set<string> bad_words;
   getBadWords ( bad_words );
-  printBadWords ( bad_words );
- 	pthread_t t;
+  pthread_t t;
   pthread_attr_t attr;
   pthread_attr_init ( &attr );
   pthread_attr_setdetachstate( &attr, PTHREAD_CREATE_DETACHED );

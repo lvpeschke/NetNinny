@@ -11,6 +11,7 @@
 CHTTPRequest::CHTTPRequest ( const string & header )
  {
  	string lowerCaseHeader, tmp;
+ 	unsigned int    pos_begin;
  	stringstream ss ( header );
  	m_Header.assign ( header );
  	lowerCaseHeader.assign ( header );
@@ -22,6 +23,18 @@ CHTTPRequest::CHTTPRequest ( const string & header )
  	ss >> m_HTTPVersion;
 	tmp = lowerCaseHeader.substr ( lowerCaseHeader.find ( "host:" ) + 6);
  	m_Host = tmp.substr ( 0, tmp.find ( "\r\n" ) );
+ 	pos_begin = lowerCaseHeader.find ( "connection: keep-alive" );
+ 	if ( pos_begin == string::npos )
+ 	{
+ 		pos_begin = lowerCaseHeader.find ( "connection: close" );
+ 		if ( pos_begin == string::npos )
+ 		{
+ 			m_Header.erase ( m_Header.length()-4 );
+ 			m_Header.append ( "Connection: close\r\n\r\n" );
+ 		}
+ 	}
+ 	else
+ 		m_Header.replace ( pos_begin, 22, "Connection: close" );
  }
 
 CHTTPGet::CHTTPGet ( const string & header ) : CHTTPRequest ( header )
@@ -31,9 +44,9 @@ CHTTPGet::CHTTPGet ( const string & header ) : CHTTPRequest ( header )
 
 string CHTTPGet::toString ( )
  {
- 	string str;
- 	str = m_Method + ' ' + m_URL + ' ' + m_HTTPVersion + "\r\nHost: " + m_Host + "\r\n\r\n";
- 	return str; 
+// 	string str;
+// 	str = m_Method + ' ' + m_URL + ' ' + m_HTTPVersion + "\r\nHost: " + m_Host + "\r\n\r\n";
+ 	return m_Header; 
  }
 
 CHTTPResponse::CHTTPResponse ( const string & header, const string & content )

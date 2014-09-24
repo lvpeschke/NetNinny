@@ -38,7 +38,8 @@ int main ( int argc, char * argv [] )
   int   socket;
   char* port;
   
-  if ( argc != 2 ) {
+  if ( argc != 2 ) 
+  {
     cout << "Incorrect number of arguments. Arguments should be in following format: ./assignment_2 port_number" << endl;
     exit ( EXIT_FAILURE );
   }
@@ -46,10 +47,9 @@ int main ( int argc, char * argv [] )
  	
   cout << "SERVER RUNNING ON PORT: " << port << endl;
  	
-  try {
-    socket = openServerSocket ( port );
-  }
-  catch ( CSocketException e ) {
+  try { socket = openServerSocket ( port ); }
+  catch ( CSocketException e ) 
+  {
     cout << e << endl; exit ( EXIT_FAILURE );
   }
   

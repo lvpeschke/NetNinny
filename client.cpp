@@ -143,7 +143,9 @@ CHTTPResponse &clientMain(CHTTPRequest &request, const set<string> &badWords)
       cout << "after checking the content" << endl;
       delete response;
       
-      CHTTPResponse* alt_response = new CHTTPResponse(BAD_CONTENT_HEADER, BAD_CONTENT_CONTENT);
+      string empty_content;
+      empty_content.clear();
+      CHTTPResponse* alt_response = new CHTTPResponse(BAD_CONTENT_HEADER, empty_content);
       return *alt_response;
     }
   }

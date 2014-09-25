@@ -14,14 +14,8 @@
 // Header used in the HTTP response in case of bad url.
 #define BAD_URL_HEADER "HTTP/1.1 302 Found\r\nLocation: http://www.ida.liu.se/~TDTS04/labs/2011/ass2/error1.html\r\nConnection: close\r\n\r\n"
 
-// Content used in the HTTP response in case of bad url.
-#define BAD_URL_CONTENT ""
-
 // Header used in the HTTP response in case of bad content.
 #define BAD_CONTENT_HEADER "HTTP/1.1 302 Found\r\nLocation: http://www.ida.liu.se/~TDTS04/labs/2011/ass2/error2.html\r\nConnection: close\r\n\r\n"
-
-// Content used in the HTTP response in case of bad content.
-#define BAD_CONTENT_CONTENT ""
 
 // Error that occurs when the host name is NULL.
 #define HOST_ERR "Host name is empty"

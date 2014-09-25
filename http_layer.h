@@ -28,6 +28,7 @@ class CHTTPRequest
  	virtual string toString ( ) = 0;
  			string getURL   ( ) { return m_URL;  }
  			string getHost  ( ) { return m_Host; }
+            string getHeader( ) { return m_Header; }
  protected:
  	string m_Method;
  	string m_URL;
@@ -55,7 +56,8 @@ class CHTTPResponse
  public:
  	       CHTTPResponse ( const string & header, const string & content );
  	string toString (  );
- 	string getContentType ( ) { return m_ContentType; }
+    string getContentType ( ) { return m_ContentType; }
+    string getHeader      ( ) { return m_Header; }
  private:
  	string m_Header;
  	string m_Content;

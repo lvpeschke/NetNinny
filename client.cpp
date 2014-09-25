@@ -39,7 +39,6 @@ int openClientSocket(const char *hostname)
   res = getaddrinfo(hostname, "http", &hints, &servinfo);
   if (res != 0)
     throw CSocketException(ADDR_ERR);
-  fprintf(stdout, "correct address\n"); ///
   
   // Creating the socket
   sockfd = socket(servinfo->ai_family, servinfo->ai_socktype, servinfo->ai_protocol);
@@ -47,7 +46,6 @@ int openClientSocket(const char *hostname)
     freeaddrinfo(servinfo);
     throw CSocketException(SOCK_ERR);
   }
-  fprintf(stdout, "socket\n"); ///
   
   // Connecting to the server
   res = connect(sockfd, servinfo->ai_addr, servinfo->ai_addrlen);
@@ -56,7 +54,6 @@ int openClientSocket(const char *hostname)
     close(sockfd);
     throw CSocketException(CONN_ERR);
   }
-  fprintf(stdout, "connected\n"); ///
   
   freeaddrinfo(servinfo);
   
@@ -72,7 +69,6 @@ ssize_t clientSend(int sockfd, size_t request_length, const char* request)
     close(sockfd);
     throw CSocketException(SEND_ERR);
   }
-  fprintf(stdout, "sent\n"); ///
   
   return length;
 }
@@ -97,13 +93,11 @@ CHTTPResponse &clientMain(CHTTPRequest &request, const set<string> &badWords)
   const char* host;
   const char* request_str;
   
-  ssize_t length;
+  ssize_t length = 0;
   size_t request_length;
   
   // Getting the information needed for the request
   host = request.getHost().c_str();
-  //host = "www.google.com";
-  
   
   if (host == 0) {
    throw CSocketException(HOST_ERR);
@@ -111,21 +105,12 @@ CHTTPResponse &clientMain(CHTTPRequest &request, const set<string> &badWords)
   request_str = request.toString().c_str();
   request_length = request.toString().length();
   
-  /*** CHANGE THIS, HARDCODED REQUEST ***
-  sprintf(requesttemp,
-          "GET %s%s HTTP/1.1\r\n"
-          "Host: %s\r\n"
-          "\r\n\r\n", host, "/", host);
-  request_length = strlen(requesttemp);
-  *** CHANGE THIS, HARDCODED REQUEST ***/
-  
   // Setting up the connection
   sockfd = openClientSocket(host);
   
+  cout << request.getHeader();
+  
   // Sending the request
-  length = 0;
-
-  //What does this mean? What does it do?
   length = clientSend(sockfd, request_length, request_str);
   if (length == -1) {
     throw CSocketException(SEND_ERR);
@@ -141,10 +126,12 @@ CHTTPResponse &clientMain(CHTTPRequest &request, const set<string> &badWords)
   // Cleaning up
   close(sockfd);
   
-  //TODO get content type here, so that we only create 1 object
+  cout << "before checking the content" << endl;
   
   // Reconstructing the HTTP
   CHTTPResponse* response = new CHTTPResponse(header, content);
+  
+  cout << response->getHeader();
   
   // What is the type of content ?
   const string text = "text";
@@ -152,16 +139,14 @@ CHTTPResponse &clientMain(CHTTPRequest &request, const set<string> &badWords)
   if (response->getContentType().find(text) != string::npos) {
     
     if (!checkBadWords(badWords, content)) {
+      
+      cout << "after checking the content" << endl;
       delete response;
       
       CHTTPResponse* alt_response = new CHTTPResponse(BAD_CONTENT_HEADER, BAD_CONTENT_CONTENT);
-
-      cout << "\n!!! REACHED THE ALTERNATIVE END !!!\n" << endl;      
       return *alt_response;
     }
   }
   
-  cout << "\n!!! REACHED THE END !!!\n" << endl;
-//  return *response;
   return *response;
 }

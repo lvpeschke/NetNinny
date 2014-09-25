@@ -145,7 +145,9 @@ CHTTPResponse &clientMain(CHTTPRequest &request, const set<string> &badWords)
       
       string empty_content;
       empty_content.clear();
-      CHTTPResponse* alt_response = new CHTTPResponse(BAD_CONTENT_HEADER, empty_content);
+      string str;
+      str.assign ( BADWORD_REDIRECTION_HEADER );
+      CHTTPResponse* alt_response = new CHTTPResponse(str, empty_content);
       return *alt_response;
     }
   }

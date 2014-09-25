@@ -73,7 +73,9 @@ CHTTPResponse::CHTTPResponse ( const string & header, const string & content )
 
 string CHTTPResponse::toString ( )
  {
- 	string str = m_Header + m_Content;
+ 	string str = m_Header;
+ 	if ( !m_Content.empty ( ) )
+ 		str.append ( m_Content );
  	return str;
  }
 

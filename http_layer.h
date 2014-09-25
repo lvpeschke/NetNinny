@@ -57,6 +57,7 @@ class CHTTPResponse
  	       CHTTPResponse ( const string & header, const string & content );
  	string toString (  );
     string getContentType ( ) { return m_ContentType; }
+    string getStatusCode  ( ) { return m_StatusCode; }
     string getHeader      ( ) { return m_Header; }
  private:
  	string m_Header;

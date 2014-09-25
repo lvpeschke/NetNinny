@@ -133,11 +133,12 @@ CHTTPResponse &clientMain(CHTTPRequest &request, const set<string> &badWords)
   
   cout << response->getHeader();
   
-  // What is the type of content ?
+  // What is the type of content?
   const string text = "text";
 
   if (response->getContentType().find(text) != string::npos) {
     
+    // Is the content ok?
     if (!checkBadWords(badWords, content)) {
       
       cout << "after checking the content" << endl;

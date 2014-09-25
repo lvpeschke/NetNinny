@@ -125,10 +125,10 @@ CHTTPResponse &clientMain(CHTTPRequest &request, const set<string> &badWords)
   // Sending the request
   length = 0;
 
-  //What does this mean? What does it do? 
-  while (length != (signed)request_length) {
-    length += clientSend(sockfd, request_length, request_str);
-    cout << "Not sent everything yet, trying again\n" << endl; ///
+  //What does this mean? What does it do?
+  length = clientSend(sockfd, request_length, request_str);
+  if (length == -1) {
+    throw CSocketException(SEND_ERR);
   }
   
   // Getting the incoming response

@@ -11,7 +11,7 @@
 CHTTPRequest::CHTTPRequest ( const string & header )
  {
  	string lowerCaseHeader, tmp;
- 	unsigned int    pos_begin;
+    size_t    pos_begin; // unsigned int
  	stringstream ss ( header );
  	m_Header.assign ( header );
  	lowerCaseHeader.assign ( header );

@@ -24,7 +24,7 @@ void getBadWords ( set<string> & bad_words )
  	ifstream input;
  	char buffer [BUFFERSIZE];
  	string line;
- 	input.open ( "badwords", ifstream::in );
+ 	input.open ( "badwords", ifstream::in | ifstream::binary );
  	while ( input.good (  ) )
  	{
  		input.getline ( buffer, BUFFERSIZE );

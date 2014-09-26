@@ -31,7 +31,7 @@ void *serverConnection ( TArg * arg )
   else
   {
     delete arg;
-    cout << "PREPARE TO BE ASSIMILATED. RESISTANCE IS FUTILE." << endl;
+    send ( arg->m_Socket, METHOD_NOT_SUPPORTED, sizeof ( METHOD_NOT_SUPPORTED ), 0); 
 //    cout << header;
     return NULL;
   }

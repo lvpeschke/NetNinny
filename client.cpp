@@ -135,7 +135,7 @@ CHTTPResponse &clientMain(CHTTPRequest &request, const set<string> &badWords)
   
   // What is the type of content?
   const string text = "text";
-
+  cout << "TEST" << endl;
   if (response->getContentType().find(text) != string::npos) {
     cout << "START OF RESPONSE" << endl;
     cout << response->toString();

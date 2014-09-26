@@ -17,7 +17,7 @@
 // Header used in the HTTP response in case of bad content.
 #define BAD_CONTENT_HEADER "HTTP/1.1 302 Found\r\nLocation: http://www.ida.liu.se/~TDTS04/labs/2011/ass2/error2.html\r\nConnection: close\r\n\r\n"
 
-#define BADWORD_REDIRECTION_HEADER "HTTP/1.1 666 Special Redirect\r\n\r\n"
+#define BADWORD_REDIRECTION_HEADER "HTTP/1.1 666 To_Hell_With_It\r\n\r\n"
 
 // Error that occurs when the host name is NULL.
 #define HOST_ERR "Host name is empty"

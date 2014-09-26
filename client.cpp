@@ -137,7 +137,9 @@ CHTTPResponse &clientMain(CHTTPRequest &request, const set<string> &badWords)
   const string text = "text";
 
   if (response->getContentType().find(text) != string::npos) {
-    
+    cout << "START OF RESPONSE" << endl;
+    cout << response->toString();
+    cout << "END OF RESPONSE" << endl;
     // Is the content ok?
     if (!checkBadWords(badWords, content)) {
       

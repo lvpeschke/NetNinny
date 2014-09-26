@@ -126,7 +126,7 @@ CHTTPResponse &clientMain(CHTTPRequest &request, const set<string> &badWords)
   // Cleaning up
   close(sockfd);
   
-  cout << "before checking the content" << endl;
+  // cout << "before checking the content" << endl;
   
   // Reconstructing the HTTP
   CHTTPResponse* response = new CHTTPResponse(header, content);
@@ -135,15 +135,15 @@ CHTTPResponse &clientMain(CHTTPRequest &request, const set<string> &badWords)
   
   // What is the type of content?
   const string text = "text";
-  cout << "TEST" << endl;
+  //cout << "TEST" << endl;
   if (response->getContentType().find(text) != string::npos) {
-    cout << "START OF RESPONSE" << endl;
+    // cout << "START OF RESPONSE" << endl;
     cout << response->toString();
-    cout << "END OF RESPONSE" << endl;
+    // cout << "END OF RESPONSE" << endl;
     // Is the content ok?
     if (!checkBadWords(badWords, content)) {
       
-      cout << "after checking the content" << endl;
+      // cout << "after checking the content" << endl;
       delete response;
       
       string empty_content;

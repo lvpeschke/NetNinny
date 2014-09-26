@@ -46,7 +46,7 @@ void *serverConnection ( TArg * arg )
   try 
   { 
     CHTTPResponse & response = clientMain ( *request, arg->m_BadWords ); 
-    cout << "RETURNED FROM CLIENTMAIN" << endl; 
+    // cout << "RETURNED FROM CLIENTMAIN" << endl; 
     //cout << response.toString ( );
     if ( !response.getStatusCode().compare( "666" ) )
       send ( arg->m_Socket, BAD_CONTENT_HEADER, sizeof ( BAD_CONTENT_HEADER ), 0); 
@@ -54,7 +54,7 @@ void *serverConnection ( TArg * arg )
       if ( send ( arg->m_Socket, response.toString ( ).c_str ( ), response.toString ( ).length(), 0) == -1 )
         cout << "NOT SENT" << endl;
 
-    cout << "RESPONSE SENT TO CLIENT" << endl;
+    // cout << "RESPONSE SENT TO CLIENT" << endl;
     delete &response;
   }
   catch ( CSocketException e ) 

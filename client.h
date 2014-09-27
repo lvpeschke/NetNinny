@@ -33,7 +33,7 @@ using namespace std;
  * hostname: address of the host, e.g. "google.com"
  * Returns the socket file descriptor.
  */
-int openClientSocket(const char* hostname);
+int openClientSocket( const char* hostname );
 
 /*
  * Sending a request to the server via sockfd
@@ -42,25 +42,16 @@ int openClientSocket(const char* hostname);
  * request: message to send to the server through the socket
  * Returns the length of the sent message, or -1 upon error.
  */
-ssize_t clientSend(int sockfd, size_t request_length, const char* request);
-
-/*
- * Receiving a response from the server via sockfd
- * sockfd: socket file descriptor, must be legal
- * response_length: size of the buffer
- * response: buffer where the response will go
- * Returns the length of the sent message, or -1 upon error.
- */
-/*ssize_t clientRecv(int sockfd, size_t response_length, char** response);*/
+ssize_t clientSend( int sockfd, size_t request_length, const char* request );
 
 /*
  * Sending an HTTP request and getting an HTTP response
  * request: a valid HTTP request object
  * badWords: set of not permitted words
  * Returns a valid HTTP response object. Either the one
- * returned by the external server, or the default 
+ * returned by the external server, or the default
  * redirection.
  */
-CHTTPResponse& clientMain(CHTTPRequest& request, const set<string>& badWords);
+CHTTPResponse& clientMain( CHTTPRequest& request, const set<string>& badWords );
 
 #endif

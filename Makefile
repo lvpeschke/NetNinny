@@ -1,3 +1,9 @@
+# Makefile
+# Written by  : Chvatal Martin & Peschke Lena
+# Written for : LiU, TDTS06, lab 2
+# Date        : Sept. 2014
+# Version     : 1.0
+
 CC = g++
 CFLAGS = -Wall -Werror -pedantic -Wno-long-long -O0 -ggdb 
 compile: client.o exceptions.o http_layer.o main.o parsing.o server.o tcp_layer.o

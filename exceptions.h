@@ -14,14 +14,17 @@
 
 using namespace std;
 
-// TODO COMMENTS
+/*
+ * A CSocketException contains information
+ * about the problem that occured.
+ */
 class CSocketException
- {
- public:
-	CSocketException ( string what );
-	friend ostream& operator<< ( ostream& os, CSocketException src );
- private:
- 	string m_What;
- };
+{
+public:
+    CSocketException ( string what );
+    friend ostream& operator<< ( ostream& os, CSocketException src );
+private:
+    string m_What;
+};
 
 #endif

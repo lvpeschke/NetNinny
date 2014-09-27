@@ -29,24 +29,24 @@
 using namespace std;
 
 /*
- * Buffer that extracts characters from a TCP stream 
+ * Buffer that extracts characters from a TCP stream
  * and stores the number of extracted characters in 'm_MaximalPos'.
  * Extracted characters are accesible one by one with
  * the 'getNextChar' method.
  * If the end of buffer is reached, a new batch of characters is extracted.
  */
 class CTCPBuffer
- {
- public:
+{
+public:
  		 CTCPBuffer     ( int socket );
- 	char getNextChar    ( );
- 	void getHTTPHeader  ( string & header );
- 	void getHTTPContent ( string & content, int content_length );
- private:
- 	char m_Buffer [BUFFERSIZE];
- 	int  m_CurrentPos;
- 	int  m_MaximalPos;
- 	int  m_Socket;
- };
+    char getNextChar    ( );
+    void getHTTPHeader  ( string & header );
+    void getHTTPContent ( string & content, int content_length );
+private:
+    char m_Buffer [BUFFERSIZE];
+    int  m_CurrentPos;
+    int  m_MaximalPos;
+    int  m_Socket;
+};
 
 #endif

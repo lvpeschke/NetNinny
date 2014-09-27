@@ -21,66 +21,58 @@ using namespace std;
  * Abstract class containing a pattern for all HTTP requests
  */
 class CHTTPRequest
- {
- public:
- 	               CHTTPRequest ( const string & header );
-	virtual       ~CHTTPRequest ( ) { }
- 	virtual string toString ( ) = 0;
- 			string getURL   ( ) { return m_URL;  }
- 			string getHost  ( ) { return m_Host; }
-            string getHeader( ) { return m_Header; }
- protected:
- 	string m_Method;
- 	string m_URL;
- 	string m_HTTPVersion;
- 	string m_Host;
- 	string m_Header;
- };
+{
+public:
+            CHTTPRequest     ( const string & header );
+    virtual ~CHTTPRequest    ( ) { }
+    virtual string toString  ( ) = 0;
+ 			string getURL    ( ) { return m_URL;  }
+ 			string getHost   ( ) { return m_Host; }
+            string getHeader ( ) { return m_Header; }
+protected:
+    string m_Method;
+    string m_URL;
+    string m_HTTPVersion;
+    string m_Host;
+    string m_Header;
+};
 
 /*
  * Class representing a HTTP GET request
  */
 class CHTTPGet : public CHTTPRequest
- {
- public:
- 	       CHTTPGet ( const string & header );
- 	      ~CHTTPGet ( ) { }
- 	string toString ( );
- };
+{
+public:
+    CHTTPGet ( const string & header );
+    ~CHTTPGet ( ) { }
+    string toString ( );
+};
 
 /*
  * Class representing a HTTP response
  */
 class CHTTPResponse
- {
- public:
- 	       CHTTPResponse ( const string & header, const string & content );
- 	string toString (  );
+{
+public:
+    CHTTPResponse ( const string & header, const string & content );
+    string toString (  );
     string getContentType ( ) { return m_ContentType; }
     string getStatusCode  ( ) { return m_StatusCode; }
     string getHeader      ( ) { return m_Header; }
- private:
- 	string m_Header;
- 	string m_Content;
- 	string m_HTTPVersion;
- 	string m_StatusCode;
- 	string m_ReasonPhrase;
- 	string m_ContentType;
- };
+private:
+    string m_Header;
+    string m_Content;
+    string m_HTTPVersion;
+    string m_StatusCode;
+    string m_ReasonPhrase;
+    string m_ContentType;
+};
 
 /*
- * Extracts the lenght of the content from the HTTP header
+ * Extracts the length of the content from the HTTP header
  * header: a HTTP header
  * Returns the length of the HTTP content.
  */
 int getContentLength ( const string & header );
-
-/*
- * Redirects the response
- * ???
- * ???
- */
-// TODO: implement
-void redirect (  );
 
 #endif

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.9.15)  21 SEP 2014 15:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.9.22)  27 SEP 2014 17:40
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -736,7 +736,7 @@ LaTeX Info: Redefining \nameref on input line 53.
 \@outlinefile=\write3
 \openout3 = `lab2.out'.
 
- <liu.jpg, id=36, 793.38165pt x 568.62988pt>
+ <liu.jpg, id=28, 793.38165pt x 568.62988pt>
 File: liu.jpg Graphic file (type jpg)
 
 <use liu.jpg>
@@ -789,47 +789,53 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 
 {/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./liu.j
 pg>]
-(./lab2.toc)
-\tf@toc=\write4
-\openout4 = `lab2.toc'.
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 127.
 
- [1
 
-] 
-AED: lastpage setting LastPage
+(/usr/local/texlive/2014/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+Underfull \hbox (badness 10000) in paragraph at lines 130--131
+
+ []
+
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.172 \end{document}
-                     [1
+l.153 \item \textit
+                   {The proxy supports both HTTP/1.0 and HTTP/1.1.} [1]
 
-]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 172.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 172.
+AED: lastpage setting LastPage
+[2]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 189.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 189.
  (./lab2.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 172.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 172.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 189.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 189.
 Package rerunfilecheck Info: File `lab2.out' has not changed.
-(rerunfilecheck)             Checksum: D9DDF26B43F34AF58C28EC957E0F10F4;442.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 172.
+(rerunfilecheck)             Checksum: 2B3F9078E8F9C57CDE143D484285FB74;321.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 189.
  ) 
 Here is how much of TeX's memory you used:
- 10206 strings out of 493108
- 149747 string characters out of 6134847
- 245227 words of memory out of 5000000
- 13477 multiletter control sequences out of 15000+600000
- 58621 words of font info for 57 fonts, out of 8000000 for 9000
+ 10252 strings out of 493108
+ 150417 string characters out of 6134847
+ 247227 words of memory out of 5000000
+ 13515 multiletter control sequences out of 15000+600000
+ 63201 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 36i,6n,43p,236b,405s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2014/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}</usr/local/
-texlive/2014/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/20
-14/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb></usr/local/texlive/2014/texmf-
-dist/fonts/type1/public/lm/lmr12.pfb>
-Output written on lab2.pdf (3 pages, 283827 bytes).
+ 36i,6n,43p,944b,405s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2014/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/
+texlive/2014/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}</usr/local/texlive/20
+14/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2014/texmf-d
+ist/fonts/type1/public/lm/lmcsc10.pfb></usr/local/texlive/2014/texmf-dist/fonts
+/type1/public/lm/lmmi12.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/pub
+lic/lm/lmr12.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/lm/lmri
+12.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/lm/lmtt12.pfb>
+Output written on lab2.pdf (3 pages, 336332 bytes).
 PDF statistics:
- 89 PDF objects out of 1000 (max. 8388607)
- 79 compressed objects within 1 object stream
- 21 named destinations out of 1000 (max. 500000)
- 70 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 95 PDF objects out of 1000 (max. 8388607)
+ 82 compressed objects within 1 object stream
+ 27 named destinations out of 1000 (max. 500000)
+ 54 words of extra memory for PDF output out of 10000 (max. 10000000)
 

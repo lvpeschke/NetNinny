@@ -27,41 +27,41 @@ using namespace std;
 /*
  * NetNinny Proxy
  *
- * Reads a port number from list of program arguments,
- * gets a server socket from openServerSocket function
+ * Reads a port number from the list of program arguments,
+ * gets a server socket from 'openServerSocket' function
  * and checks for socket errors.
- * Calls the function serverMain that contains the main server loop
+ * Calls the function 'serverMain' that contains the main server loop
  * and handles requests and responses with threads.
  */
 int main ( int argc, char * argv [] )
 {
-  int   socket;
-  char* port;
-  
-  if ( argc != 2 ) 
-  {
-    cout << "Incorrect number of arguments. Arguments should be in following format: ./assignment_2 port_number" << endl;
-    exit ( EXIT_FAILURE );
-  }
-  port = argv[1];
- 	
-  cout << "SERVER RUNNING ON PORT: " << port << endl;
- 	
-  try { socket = openServerSocket ( port ); }
-  catch ( CSocketException e ) 
-  {
-    cout << e << endl; exit ( EXIT_FAILURE );
-  }
-  
-  serverMain ( socket );
-  close ( socket );
-  
-  /*
-   cout << "Client code" << endl;
-   mainClient(argv[2]);
-   CHTTPRequest *request = NULL;
-   CHTTPResponse res = clientMain(*request);
-   */
-  
-  return 0;
+    int   socket;
+    char* port;
+    
+    if (argc != 2) {
+        cout << "Incorrect number of arguments. "
+        "Arguments should be in following format:\n"
+        "./net_ninny port_number" << endl;
+        exit(EXIT_FAILURE);
+    }
+    // REQUIREMENT 7
+    port = argv[1];
+    
+    cout << "SERVER RUNNING ON PORT: " << port << endl;
+    
+    try {
+        // Set up the socket
+        socket = openServerSocket(port);
+    }
+    catch (CSocketException e) {
+        cout << e << endl;
+        exit(EXIT_FAILURE);
+    }
+    
+    // Start the proxy
+    serverMain(socket);
+    
+    close(socket);
+    
+    return 0;
 }

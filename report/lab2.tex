@@ -112,45 +112,27 @@ Teaching assistant :\\[0.2cm]
 %	TABLE OF CONTENTS
 %--------------------------------------------------------------------------
 
-\pagenumbering{gobble}
-\clearpage
-\thispagestyle{empty}
-\tableofcontents
-\clearpage
-\pagenumbering{arabic}
+%\pagenumbering{gobble}
+%\clearpage
+%\thispagestyle{empty}
+%\tableofcontents
+%\clearpage
+%\pagenumbering{arabic}
 
 %--------------------------------------------------------------------------
 %	CONTENT
 %--------------------------------------------------------------------------
 
 \section{Introduction}
+In order to learn more about the World Wide Web and HTTP and to lear about TCP/IP and socket programming, we designed and implemented a simple web proxy. This software allows to filter the interaction between his browser and the Web. We decided to write the code in \texttt{C++}.
 
-% Talk about HTTP, TCP socket programming
+\section{How it works}
+The proxy consists of a number of files, which can be compiled and linked with the provided \texttt{Makefile} and the command \texttt{make}. To run the program, simply type \texttt{./net\_ninny PORT} in the terminal, where \texttt{PORT} is the proxy port used with the browser.\\
 
-% Proxy: what it is
+The proxy is mainly divided into two parts: a server side and a client side. The server gets the request from the browser through the port specified by the user (port~$x$) and checks the url for bad content. If there is some, it sends back a \texttt{302 Found} error with the url of the error page to be displayed to port~$x$. If there is no bad content, the proxy server makes sure to use a non persistent connection (\texttt{Connection: close}) and forwards the request to the client, who sends it out to the web through port 80. The client side then gets a response through the same port. If the response contains text, it checks for bad words. If it finds some, it sends an internal message to the server side of the proxy, who then sends a \texttt{302 Found} to the browser. If not, or if the content is not text, the server simply forwards the response, which is then transmitted to the browser (via port $x$).
 
-% We chose C++
-
-\section{Manual}
-\subsection{How to use it}
-
-% compile with make
-% configure: browser
-% use with terminal instruction
-
-\subsection{How it works}
-
-% req 2: server with CTCPBuffer, then gives it to client
-% req 3: server side when parsing url
-% req 6: ???
-% req 7: command line argument
-% req 8: client side, looks for Content-type:
-
-% High level algorithm + details
 % Simple drawing of prep. question 3
 % Data transfer via  recv and send
-% Connection close and keep alive, why
-% RFC standard for the use of proxies
 
 \section{Testing}
 \subsection{Several cases}
@@ -160,12 +142,47 @@ Teaching assistant :\\[0.2cm]
 \paragraph{An HTML file with a good name but bad content}
 \paragraph{A valid Google request}
 % others
-\paragraph{A Google request with bad content}
+\paragraph{Aftonbladet}
 \paragraph{A YouTube video}
 \paragraph{A tour through Wikipedia}
-\subsection{Summary of the available services} 
 
-\section{Conclusion}
+\subsection{Available services} 
+The implemented proxy supports the required features.
+
+\begin{enumerate}
+\item \textit{The proxy supports both HTTP/1.0 and HTTP/1.1.}
+
+\item \textit{It handles simple HTTP GET interactions between client and server.}\\
+All messages are transformed into \texttt{CTCPBuffer} objects, and the modified and checked as \texttt{CHTTPRequest} and \texttt{CHTTPResponse} objects. 
+
+\item \textit{It blocks requests for undesirable URLs, using HTTP redirection to display an error page instead.}\\
+This is done by the client when he reads the url in file \texttt{server.cpp} on line 45.
+
+\item \textit{It detects inappropriate content bytes within a Web page before it is returned to the user, and redirects to another error page.}\\
+The server and client work together on this. Lines 107 in \texttt{client.cpp} and 45 in file \texttt{server.cpp} handle the case.
+
+\item \textit{It imposes no limit on the size of the transferred HTTP data.}\\
+The proxy always processes the whole transferred data. The proxy receives data by calling \texttt{recv} incrementally.
+
+\item \textit{It is compatible with all major browsers (e.g. Internet Explorer, Mozilla Firefox, Google Chrome, etc.) without the requirement to tweak any advanced feature.}\\
+For our tests, we have used Mozilla Firefox and Google Chrome. In the code, all headers are converted to lower case when we have to parse them, so that the different cases used by the browsers do not cause a problem.
+
+\item \textit{It allows the user to select the proxy port.}\\
+The proxy port is the only argument the user has to provide to the program. File \texttt{main.cpp} line 47.
+
+\item \textit{It is smart in selection of what HTTP content should be searched for the forbidden keywords.}\\
+The proxy only searches text content. File \texttt{client.cpp} line 107.
+
+% \item \textit{(Optional) Supporting file upload using the POST method}
+\end{enumerate}
+
+% req 8: client side, looks for Content-type:
+
+\paragraph{Capabilities and limitations}
+The proxy server is functional for a basic use. As seen in the tests above, %%
+
+
+\section{Possible improvements}
 % possible improvements
 
     

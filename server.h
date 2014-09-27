@@ -29,7 +29,11 @@
 
 using namespace std;
 
-// TODO COMMENT
+/*
+ * Structure containg the arguments needed
+ * by the threads to handle the requests
+ * from the browser.
+ */
 struct TArg
 {
   int m_Socket;
@@ -41,7 +45,7 @@ struct TArg
  * after an accepted connection on the socket
  * arg: the argument structure needed to process the connection
  */
-void *serverConnection ( TArg * arg );
+void* serverConnection ( TArg * arg );
 
 /*
  * Main server loop accepting new connections and creating new threads for them

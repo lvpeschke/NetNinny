@@ -76,9 +76,6 @@ CHTTPResponse &clientMain ( CHTTPRequest &request, const set<string> &badWords )
     
     ssize_t length = 0;
     
-    // Printing the request header to stdout
-    cout << request.getHeader();
-    
     // Getting the information needed for the request
     host = request.getHost().c_str();
     if (host == 0) {
@@ -116,9 +113,6 @@ CHTTPResponse &clientMain ( CHTTPRequest &request, const set<string> &badWords )
             return *alt_response;
         }
     }
-    
-    // Printing the response header
-    cout << response->getHeader();
     
     return *response;
 }
